@@ -1,3 +1,13 @@
+:root {
+    --header: rgba(153, 243, 255, 1);
+    --bg : rgba(235, 253, 255, 1);
+    --prior1: rgba(255, 235, 235, 1);
+    --prior2: rgba(255, 253, 235, 1);
+    --prior3: rgba(235, 255, 237, 1);
+}
+
+/* Positioning  */
+
 html::-webkit-scrollbar {
     display:none;
 }
@@ -41,8 +51,7 @@ body, * {
 
     width:100%;
 }
-/*
-*/
+
 .upper, .tasks {
     width: 60%;
     min-width:300px;
@@ -60,4 +69,12 @@ body, * {
 .copr {
     position: absolute;
     bottom: 0;
+}
+
+/* Coloring */
+body {
+    background: var(--bg);
+}
+.header {
+    background: var(--header);
 }

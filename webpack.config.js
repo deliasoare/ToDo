@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 
 module.exports = {
     mode: 'development',
@@ -25,6 +27,21 @@ module.exports = {
             title: 'ToDoing',
             filename: 'index.html',
             template: './src/template.html'
-        })
-    ]
+        }),
+        new MiniCssExtractPlugin({
+            filename: "styles.css"
+          }),
+        new HTMLInlineCSSWebpackPlugin()
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
+            }
+        ]
+    }
 }
