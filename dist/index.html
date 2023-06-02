@@ -5,7 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<script defer src="bundle.js"></script></head>
+    <link rel="stylesheet" type="text/css" href="../src/styles.css">
+<script defer src="bundle.js"></script><style type="text/css">/*!******************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
+  \******************************************************************/
+:root {
+    --header: rgba(153, 243, 255, 1);
+    --bg : rgba(235, 253, 255, 1);
+    --prior1: rgba(255, 235, 235, 1);
+    --prior2: rgba(255, 253, 235, 1);
+    --prior3: rgba(235, 255, 237, 1);
+}
+
+/* Positioning  */
+
+html::-webkit-scrollbar {
+    display:none;
+}
+
+body, * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.container { 
+    height: 100%;
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+}
+.header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.main {
+    margin:1.5em;
+    display:grid;
+    grid-template-rows: 50px 1fr;
+}
+.upper {
+    justify-self:center;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+}
+.lower {
+    margin-top: 2%;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
+.footer {
+
+    width:100%;
+}
+
+.upper, .tasks {
+    width: 60%;
+    min-width:300px;
+    max-width:650px;
+}
+.tasks {
+    border:1px solid black;
+    height:80%;
+    min-height:650px;
+}
+.footer {
+    display:flex;
+    justify-content:center;
+}
+.copr {
+    position: absolute;
+    bottom: 0;
+}
+
+/* Coloring */
+body {
+    background: var(--bg);
+}
+.header {
+    padding: 1em;
+    background: var(--header);
+}
+button {
+    padding: 1em;
+    border-radius: 10px;
+}
+</style></head>
 <body>
     <div class="container">
         <div class="header">
@@ -14,7 +100,7 @@
         </div>
         <div class="main">
             <div class="upper">
-                <p class="header">Tasks</p>
+                <p class="para">Tasks</p>
                 <button class="addDep">NEW DEPARTMENT</button>
             </div>
             <div class="lower">

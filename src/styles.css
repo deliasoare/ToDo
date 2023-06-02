@@ -25,7 +25,6 @@ body, * {
     grid-template-rows: 50px 1fr 50px;
 }
 .header {
-    margin:1em;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -65,6 +64,7 @@ body, * {
 .footer {
     display:flex;
     justify-content:center;
+    position:relative;
 }
 .copr {
     position: absolute;
@@ -76,5 +76,10 @@ body {
     background: var(--bg);
 }
 .header {
+    padding: 1em;
     background: var(--header);
+}
+button {
+    padding: 1em;
+    border-radius:10px;
 }
