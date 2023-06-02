@@ -127,7 +127,7 @@ button {
 .modal {
     min-height:350px;
     height:30%;
-    width:15%;
+    width:20%;
     min-width: 300px;
     max-width: 500px;
     max-height:550px;
@@ -254,4 +254,12 @@ form, .newTask, .newDep, .colorMapMod {
 }
 input, textarea {
     font-family: 'IM Fell English', serif;
+}
+.spacedLi {
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+label {
+    cursor: pointer;
 }
