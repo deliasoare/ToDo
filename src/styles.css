@@ -112,7 +112,6 @@ button {
     cursor:pointer;
 }
 .modal-container {
-    
     min-height: 100%;
     width: 100%;
     top: 0;
@@ -120,7 +119,7 @@ button {
     justify-content: center;
     align-items: center;
     position: absolute;
-    display: flex;
+    display: none;
 }
 .modal {
     min-height:350px;
