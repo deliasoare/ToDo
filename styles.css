@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../src/styles.css">
-<script defer src="bundle.js"></script><style type="text/css">/*!******************************************************************!*\
+/*!******************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
   \******************************************************************/
 :root {
@@ -100,27 +92,3 @@ button {
 }
 
 
-</style></head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="title">TODOING</div>
-            <button class="colorMap">Color Map</button>
-        </div>
-        <div class="main">
-            <div class="upper">
-                <p class="para">Tasks</p>
-                <button class="addDep">NEW DEPARTMENT</button>
-            </div>
-            <div class="lower">
-                <div class="tasks">
-
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <a class="copr">@deliasoare</a>
-        </div>
-    </div>
-</body>
-</html>
