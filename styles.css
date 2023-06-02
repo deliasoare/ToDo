@@ -1,12 +1,18 @@
 /*!******************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
   \******************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap);
+/*!**********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css (1) ***!
+  \**********************************************************************/
 :root {
     --header: rgba(153, 243, 255, 1);
     --bg : rgba(235, 253, 255, 1);
+    --taskBg: rgba(245, 245, 245, 1);
     --prior1: rgba(255, 235, 235, 1);
     --prior2: rgba(255, 253, 235, 1);
     --prior3: rgba(235, 255, 237, 1);
+    --modalBg: rgba(0, 0, 0, 0.4);
 }
 
 /* Positioning  */
@@ -14,16 +20,16 @@
 html::-webkit-scrollbar {
     display:none;
 }
-body {
+body, html {
     height: 100vh;
 }
 body, * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'IM Fell English SC', serif;
 }
 .container { 
-    height: 100%;
     display: grid;
     grid-template-rows: 75px 1fr 50px;
 }
@@ -44,7 +50,7 @@ body, * {
     align-items: center;
 }
 .lower {
-    margin-top: 2%;
+    margin-top: 1%;
     display:flex;
     justify-content:center;
     align-items:flex-start;
@@ -84,11 +90,103 @@ body {
 button {
     border-radius:10px;
     border: none;
+    cursor: pointer;
 }
 .colorMap {
     padding:1.1em;
     background: var(--bg);
     margin-right:10%;
 }
+.addDep {
+    padding:1.1em 2.1em;
+    background: var(--header);
+}
+.para {
+    font-size:2rem;
+}
+.copr {
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif
+}
+.title {
+    font-size:2rem;
+    cursor:pointer;
+}
+.modal-container {
+    min-height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: var(--modalBg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+.modal {
+    border:2px solid pink;
+    min-height:350px;
+    height:30%;
+    min-width: 250px;
+    max-width: 500px;
+    max-height:550px;
+    padding: 1em;
+    background: var(--taskBg);
+    border-radius: 25px;
+    position: absolute;
+}
+li {
+    position: relative;
+}
 
+textarea {
+    resize:none;
+}
+ul {
+    list-style: none;
+}
+.priorityLi {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 
+.priorityLi {
+    margin:0;
+}
+select {
+    border-radius:50%;
+    width:40px;
+    height:40px;
+    font-size: .7rem;
+    text-align: center;
+}
+select, input, textarea {
+    border: none;
+}
+input:focus, input:active, textarea:focus, textarea:active{
+    outline: none;
+    border:1px solid var(--header);
+}
+select {
+    outline: none;
+}
+option {
+    border: none;
+    outline: none;
+}
+.newTask li \ .priorityLi, select  {
+    background: var(--bg);
+}
+.addTask {
+    margin-top:2%;
+    padding:1em;
+    text-align:center;
+    margin:0 auto;
+    background: var(--header);
+}
+form, .newTask {
+    width:100%;
+    height:100%;
+}
