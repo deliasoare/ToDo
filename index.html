@@ -18,49 +18,95 @@
                 <button class="addDep">NEW DEPARTMENT</button>
             </div>
             <div class="lower">
-                <div class="tasks">
+                <div class="tasksCont">
+                    <div class="categories">
+                        <div class="all category selectedCategory">ALL</div>
+                        <div class="done category">DONE</div>
+                        <div class="missed category">MISSED</div>
+                        <div class="left category">LEFT</div>
+                    </div>
+                    <div class="tasks">
 
+                    </div>
                 </div>
             </div>
         </div>
         <div class="footer">
             <a class="copr">@deliasoare</a>
         </div>
-        <div class="modal-container">
-            <div class="modal">
-                <div class="newTask">
-                    <form action="">
-                        <ul>
-                            <li>
-                                <label for="title">Title</label>
-                                <br>
-                                <input type="text" id="title">
-                            </li>
-                            <li class="priorityLi">
-                                <select name="priority" id="priority">
-                                    <option value="I">I</option>
-                                    <option value="II">II</option>
-                                    <option value="III">III</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label for="desc">Description</label>
-                                <br>
-                                <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
-                            </li>
-                            <li>
-                                <label for="notes">Notes</label>
-                                <br>
-                                <textarea name="notes" id="notes" cols="30" rows="3"></textarea>
-                            </li>
-                            <li class="dateLi">
-                                <label for="date">Deadline</label>
-                                <br>
-                                <input type="date" id="date">
-                            </li>
-                        </ul>
-                        <button type="submit" class="addTask">ADD TASK</button>
-                    </form>
+    </div>
+    <div class="modal-container mod-contNewTask">
+        <div class="modal">
+            <div class="newTask">
+                <form action="">
+                    <ul>
+                        <li>
+                            <label for="title">Title</label>
+                            <br>
+                            <input required type="text" id="title">
+                        </li>
+                        <li class="priorityLi">
+                            <select name="priority" id="priority">
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="desc">Description</label>
+                            <br>
+                            <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                        </li>
+                        <li>
+                            <label for="notes">Notes</label>
+                            <br>
+                            <textarea name="notes" id="notes" cols="30" rows="3"></textarea>
+                        </li>
+                        <li class="dateLi">
+                            <label for="date">Deadline</label>
+                            <br>
+                            <input required type="date" id="date">
+                        </li>
+                    </ul>
+                    <button type="submit" class="addTask">ADD TASK</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container mod-contNewDep">
+        <div class="modal modalNewDep">
+            <div class="newDep">
+                <form class="formDep">
+                    <ul class="ulDep">
+                        <li>
+                            <p class="textNewDep">Add a new department</p>
+                        </li>
+                        <li class="spacedLi">
+                            <label for="title2">Title</label>
+                            <input required type="text" id="title2">
+                        </li>
+                    </ul>
+                    <button type="submit" class="addDepartment">ADD</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container mod-contColorMap">
+        <div class="modal modalColorMap">
+            <div class="colorMapMod">
+                <div class="priorities">
+                    <div class="priority1 pr">
+                        <span class="text p1">PRIORITY 1</span>
+                        <div class="color cp1"></div>
+                    </div>
+                    <div class="priority2 pr">
+                        <div class="text p2">PRIORITY 2</div>
+                        <div class="color cp2"></div>
+                    </div>
+                    <div class="priority3 pr">
+                        <div class="text p3">PRIORITY 3</div>
+                        <div class="color cp3"></div>
+                    </div>
                 </div>
             </div>
         </div>
