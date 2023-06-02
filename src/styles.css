@@ -112,20 +112,21 @@ button {
     cursor:pointer;
 }
 .modal-container {
+    
     min-height: 100%;
     width: 100%;
     top: 0;
     background: var(--modalBg);
-    display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
+    display: none;
 }
 .modal {
     min-height:350px;
     height:30%;
     width:15%;
-    min-width: 250px;
+    min-width: 300px;
     max-width: 500px;
     max-height:550px;
     padding: 1em;
@@ -146,7 +147,7 @@ ul {
 .priorityLi {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 40%;
 }
 
 .priorityLi {
@@ -173,17 +174,50 @@ option {
     border: none;
     outline: none;
 }
-.newTask li \ .priorityLi, select  {
-    background: var(--bg);
+
+input {
+    padding: 0.5em;
 }
-.addTask {
+
+
+.addTask{
     margin-top:2%;
     padding:1em;
     text-align:center;
-    margin:0 auto;
     background: var(--header);
+    left:35%;
+    position: absolute;
+    bottom:0;
 }
-form, .newTask {
+form, .newTask, .newDep {
     width:100%;
     height:100%;
+}
+.modalNewDep {
+    background: var(--header);
+}
+.formDep {
+    display:grid;
+    grid-template-rows:3fr 1fr;
+}
+.ulDep {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+}
+.addDepartment {
+    align-self:flex-end;
+    justify-self: flex-end;
+}
+.textNewDep {
+    font-size: 1.3rem;
+}
+#title2 {
+    background: var(--bg);
+}
+.addDepartment {
+    padding: 0.4em 1.5em;
+    font-size:1.2rem;
+    background: var(--bg);
 }
