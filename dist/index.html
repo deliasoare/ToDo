@@ -5,102 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../src/styles.css">
-<script defer src="bundle.js"></script><style type="text/css">/*!******************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
-  \******************************************************************/
-:root {
-    --header: rgba(153, 243, 255, 1);
-    --bg : rgba(235, 253, 255, 1);
-    --prior1: rgba(255, 235, 235, 1);
-    --prior2: rgba(255, 253, 235, 1);
-    --prior3: rgba(235, 255, 237, 1);
-}
-
-/* Positioning  */
-
-html::-webkit-scrollbar {
-    display:none;
-}
-body {
-    height: 100vh;
-}
-body, * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-.container { 
-    height: 100%;
-    display: grid;
-    grid-template-rows: 75px 1fr 50px;
-}
-.header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-.main {
-    margin:1.5em;
-    display:grid;
-    grid-template-rows: 50px 1fr;
-}
-.upper {
-    justify-self:center;
-    display:flex;
-    justify-content:space-between;
-    align-items: center;
-}
-.lower {
-    margin-top: 2%;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-}
-.footer {
-    width:100%;
-}
-
-.upper, .tasks {
-    width: 60%;
-    min-width:300px;
-    max-width:650px;
-}
-.tasks {
-    border:1px solid black;
-    height:80%;
-    min-height:650px;
-}
-.footer {
-    display:flex;
-    justify-content:center;
-    position:relative;
-}
-.copr {
-    position: absolute;
-    bottom: 0;
-}
-
-/* Coloring */
-body {
-    background: var(--bg);
-}
-.header {
-    padding: 1em;
-    background: var(--header);
-}
-button {
-    border-radius:10px;
-    border: none;
-}
-.colorMap {
-    padding:1.1em;
-    background: var(--bg);
-    margin-right:10%;
-}
-
-
-</style></head>
+<script defer src="bundle.js"></script><link href="styles.css" rel="stylesheet"></head>
 <body>
     <div class="container">
         <div class="header">
@@ -120,6 +25,44 @@ button {
         </div>
         <div class="footer">
             <a class="copr">@deliasoare</a>
+        </div>
+        <div class="modal-container">
+            <div class="modal">
+                <div class="newTask">
+                    <form action="">
+                        <ul>
+                            <li>
+                                <label for="title">Title</label>
+                                <br>
+                                <input type="text" id="title">
+                            </li>
+                            <li class="priorityLi">
+                                <select name="priority" id="priority">
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label for="desc">Description</label>
+                                <br>
+                                <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                            </li>
+                            <li>
+                                <label for="notes">Notes</label>
+                                <br>
+                                <textarea name="notes" id="notes" cols="30" rows="3"></textarea>
+                            </li>
+                            <li class="dateLi">
+                                <label for="date">Deadline</label>
+                                <br>
+                                <input type="date" id="date">
+                            </li>
+                        </ul>
+                        <button type="submit" class="addTask">ADD TASK</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>

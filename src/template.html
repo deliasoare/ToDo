@@ -27,5 +27,43 @@
             <a class="copr">@deliasoare</a>
         </div>
     </div>
+    <div class="modal-container">
+        <div class="modal">
+            <div class="newTask">
+                <form action="">
+                    <ul>
+                        <li>
+                            <label for="title">Title</label>
+                            <br>
+                            <input type="text" id="title">
+                        </li>
+                        <li class="priorityLi">
+                            <select name="priority" id="priority">
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label for="desc">Description</label>
+                            <br>
+                            <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                        </li>
+                        <li>
+                            <label for="notes">Notes</label>
+                            <br>
+                            <textarea name="notes" id="notes" cols="30" rows="3"></textarea>
+                        </li>
+                        <li class="dateLi">
+                            <label for="date">Deadline</label>
+                            <br>
+                            <input type="date" id="date">
+                        </li>
+                    </ul>
+                    <button type="submit" class="addTask">ADD TASK</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
