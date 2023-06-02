@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap');
 
 :root {
     --header: rgba(153, 243, 255, 1);
@@ -248,4 +249,7 @@ form, .newTask, .newDep, .colorMapMod {
 }
 .cp3 {
     background: var(--prior3);
+}
+input, textarea {
+    font-family: 'IM Fell English', serif;
 }
