@@ -22,7 +22,9 @@
 html::-webkit-scrollbar {
     display:none;
 }
-
+body {
+    height: 100vh;
+}
 body, * {
     box-sizing: border-box;
     margin: 0;
@@ -31,7 +33,7 @@ body, * {
 .container { 
     height: 100%;
     display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 75px 1fr 50px;
 }
 .header {
     display:flex;
@@ -56,7 +58,6 @@ body, * {
     align-items:flex-start;
 }
 .footer {
-
     width:100%;
 }
 
@@ -73,6 +74,7 @@ body, * {
 .footer {
     display:flex;
     justify-content:center;
+    position:relative;
 }
 .copr {
     position: absolute;
@@ -88,9 +90,16 @@ body {
     background: var(--header);
 }
 button {
-    padding: 1em;
-    border-radius: 10px;
+    border-radius:10px;
+    border: none;
 }
+.colorMap {
+    padding:1.1em;
+    background: var(--bg);
+    margin-right:10%;
+}
+
+
 </style></head>
 <body>
     <div class="container">

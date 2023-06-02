@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
-
+/*!******************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
+  \******************************************************************/
 :root {
     --header: rgba(153, 243, 255, 1);
     --bg : rgba(235, 253, 255, 1);
@@ -20,7 +21,6 @@ body, * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'IM Fell English SC', serif;
 }
 .container { 
     height: 100%;
@@ -44,7 +44,7 @@ body, * {
     align-items: center;
 }
 .lower {
-    margin-top: 1%;
+    margin-top: 2%;
     display:flex;
     justify-content:center;
     align-items:flex-start;
@@ -84,26 +84,11 @@ body {
 button {
     border-radius:10px;
     border: none;
-    cursor: pointer;
 }
 .colorMap {
     padding:1.1em;
     background: var(--bg);
     margin-right:10%;
 }
-.addDep {
-    padding:1.1em 2.1em;
-    background: var(--header);
-}
-.para {
-    font-size:2rem;
-}
-.copr {
-    font-size: 1.2rem;
-    cursor: pointer;
-    font-family: 'Times New Roman', Times, serif
-}
-.title {
-    font-size:2rem;
-    cursor:pointer;
-}
+
+
