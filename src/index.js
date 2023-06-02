@@ -7,14 +7,17 @@ const colorMapModal = document.querySelector('.mod-contColorMap');
 const addDep = document.querySelector('.addDep');
 const colorMap = document.querySelector('.colorMap')
 
-const DOM = {
-    openModal(modal) {
+const formDep = document.querySelector('.formDep');
+const projects = [];
+const DOM = (function() {
+    const openModal = (modal) => {
         modal.style.display = 'flex';
-    },
-    closeModal(modal) {
+    }
+    const closeModal = (modal) => {
         modal.style.display = 'none';
     }
-}
+    return {openModal, closeModal};
+})()
 addDep.addEventListener('click', function() {
     DOM.openModal(newDepModal);
 });
@@ -28,3 +31,8 @@ window.onclick = function(e) {
             DOM.closeModal(modal);
     })
 }
+formDep.addEventListener('submit', function(e) {
+    const values = document.querySelector('#title2').value;
+    console.log(values);
+    e.preventDefault();
+})
