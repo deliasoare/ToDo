@@ -120,7 +120,7 @@ button {
     justify-content: center;
     align-items: center;
     position: absolute;
-    display: none;
+    display: flex;
 }
 .modal {
     min-height:350px;
@@ -179,7 +179,6 @@ input {
     padding: 0.5em;
 }
 
-
 .addTask{
     margin-top:2%;
     padding:1em;
@@ -189,7 +188,7 @@ input {
     position: absolute;
     bottom:0;
 }
-form, .newTask, .newDep {
+form, .newTask, .newDep, .colorMapMod {
     width:100%;
     height:100%;
 }
@@ -220,4 +219,34 @@ form, .newTask, .newDep {
     padding: 0.4em 1.5em;
     font-size:1.2rem;
     background: var(--bg);
+}
+.priorities {
+    height:100%;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items:center;
+}
+.pr {
+    width: 100%;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+.text {
+    font-size: 1.1rem;
+}
+.color {
+    width:100px;
+    height:32px;
+}
+.cp1 {
+    background: var(--prior1);
+}
+.cp2 {
+    background: var(--prior2);
+}
+.cp3 {
+    background: var(--prior3);
 }
