@@ -12,8 +12,12 @@ const colorMapModal = document.querySelector('.mod-contColorMap');
 const addDep = document.querySelector('.addDep');
 const colorMap = document.querySelector('.colorMap')
 const warning = document.querySelector('.warning');
+const categoryCont = document.querySelector('.categoires');
+const categories = document.querySelectorAll('.category');
 
-const DEPARTMENTS = [];
+const DEPARTMENTS = [
+    new Department('General')
+];
 
 const formDep = document.querySelector('.formDep');
 
@@ -45,6 +49,15 @@ const DOM = (function() {
         
     }
     
+    const switchCategory = (category) => {
+        categories.forEach(cat => {
+            console.log(cat.classList);
+            if (cat.classList.value.includes('selectedCategory'))
+                cat.classList.remove('selectedCategory');
+        })
+        category.classList.add('selectedCategory');
+    }
+
     const showTemporaryWarning = (message) => {
         warning.textContent = message;
         warning.style.display = 'block';
@@ -80,7 +93,7 @@ const DOM = (function() {
 
         })
     }
-    return {openModal, closeModal, updateDepartments, showTemporaryWarning};
+    return {openModal, closeModal, updateDepartments, showTemporaryWarning, switchCategory};
 })();
 
 const Functionality = (function() {
@@ -127,3 +140,12 @@ formDep.addEventListener('submit', function(e) {
     e.preventDefault();
 })
 
+categories.forEach(category => {
+    category.addEventListener('click', function() {
+        DOM.switchCategory(category);
+    })
+})
+
+window.onload = function() {
+    DOM.updateDepartments();
+}

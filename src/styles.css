@@ -77,17 +77,18 @@ body, * {
 }
 .depPlus {
     position: absolute;
-    left: 5%;
+    left: 4%;
 }
 .depDelete {
     position: absolute;
-    right: 5%;
+    right: 4%;
 }
 .department {
     display:flex;
     width: 100%;
     height: fit-content;
     margin-left: 10%;
+    cursor: pointer;
 }
 .depTitle + .icon {
     margin-left: 2%;
@@ -335,6 +336,5 @@ label {
     transition: 2s ease-in-out;
 }
 .icon {
-    height: 15px;
-    margin-top: 1%;
+    height: 25px;
 }

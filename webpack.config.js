@@ -22,6 +22,7 @@ module.exports = {
         compress: true,
         historyApiFallback: true
     },
+    devtools: 'source-map',
     plugins: [
         new HtmlWebpackPlugin({
             title: 'ToDoing',
