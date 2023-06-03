@@ -9,6 +9,7 @@
     --prior2: rgba(255, 253, 235, 1);
     --prior3: rgba(235, 255, 237, 1);
     --modalBg: rgba(0, 0, 0, 0.4);
+    --boxShadow: rgba(0, 0, 0, 0.2);
 }
 
 /* Positioning  */
@@ -80,14 +81,15 @@ body, * {
     padding: 1em;
 }
 button, .category {
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.2)
+    box-shadow: 3px 3px var(--boxShadow)
 }
 .selectedCategory {
     background: var(--header);
+    box-shadow: inset 0px 0px 5px var(--boxShadow);
 }
 .tasksCont {
     background: var(--taskBg);
-    box-shadow:3px 5px rgba(0, 0, 0, 0.2);
+    box-shadow:3px 5px var(--boxShadow);
     height:80%;
     min-height:650px;
     border-radius: 10px;

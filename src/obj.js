@@ -1,7 +1,7 @@
 export class Department {
-    constructor(title, todos) {
+    constructor(title, todos=[]) {
         this.title = title;
-        this.toDos = [];
+        this.toDos = todos;
     }
     addToDo(toDo) {
         this.toDos.push(toDo);
