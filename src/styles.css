@@ -65,9 +65,32 @@ body, * {
     max-width:650px;
 }
 .tasks {
+    margin-top: 5%;
     display: flex;
-    justify-content: space-evenly;
-    align-items:center;
+    flex-direction: column;
+    gap: 5%;
+    position: relative;
+    font-size: 1.35rem;
+}
+.depTitle {
+    font-family: 'IM Fell English', serif;
+}
+.depPlus {
+    position: absolute;
+    left: 5%;
+}
+.depDelete {
+    position: absolute;
+    right: 5%;
+}
+.department {
+    display:flex;
+    width: 100%;
+    height: fit-content;
+    margin-left: 10%;
+}
+.depTitle + .icon {
+    margin-left: 2%;
 }
 .categories {
     display: flex;
@@ -310,4 +333,8 @@ label {
     position: absolute;
     top: 10%;
     transition: 2s ease-in-out;
+}
+.icon {
+    height: 15px;
+    margin-top: 1%;
 }

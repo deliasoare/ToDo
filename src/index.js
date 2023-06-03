@@ -1,6 +1,8 @@
 import './styles.css';
 import {Department, ToDo} from './obj';
 import Plus from './assets/plus.svg';
+import DownArrow from './assets/downArrow.svg';
+import Minus from './assets/minus.svg';
 
 const tasks = document.querySelector('.tasks');
 const modals = document.querySelectorAll('.modal-container');
@@ -16,9 +18,11 @@ const DEPARTMENTS = [];
 const formDep = document.querySelector('.formDep');
 
 const DOM = (function() {
-    const openModal = (modal) => {
-        modal.style.display = 'flex';
+    const _focusModal = (modal) => {
+        if (modal.querySelector('input')) 
+             modal.querySelector('input').focus();
     }
+
     const _clearAllInputs = (element) => {
         if (element.querySelectorAll('input'))
             element.querySelectorAll('input').forEach(input => {
@@ -29,11 +33,18 @@ const DOM = (function() {
                 input.textContent = '';
             })
     }
+
+    const openModal = (modal) => {
+        modal.style.display = 'flex';
+        _focusModal(modal);
+    }
+
     const closeModal = (modal) => {
         modal.style.display = 'none';
         _clearAllInputs(modal);
         
     }
+    
     const showTemporaryWarning = (message) => {
         warning.textContent = message;
         warning.style.display = 'block';
@@ -42,23 +53,26 @@ const DOM = (function() {
             warning.style.display = 'none';
         }, 3000);
     }
+
     const updateDepartments = () => {
         // ADD ICONS
         tasks.textContent = '';
         DEPARTMENTS.forEach(department => {
             const dep = document.createElement('div');
             dep.classList = `department ${department.title}Dep`;
-            const plus = document.createElement('span');
-            plus.classList = `plus`;
+            const plus = document.createElement('img');
+            plus.classList = `depPlus icon`;
             const title = document.createElement('span');
             title.textContent = department.title;
             title.classList = 'depTitle';
-            const expand = document.createElement('span');
-            expand.classList = `depExpand`;
-            const del = document.createElement('span');
-            del.classList = `depDelete`;
+            const expand = document.createElement('img');
+            expand.classList = `depExpand icon`;
+            const del = document.createElement('img');
+            del.classList = `depDelete icon`;
 
-            plus.style.background = `url(${Plus}) no-repeat 0 0`
+            plus.src = Plus;
+            expand.src = DownArrow;
+            del.src = Minus;
 
             dep.append(plus, title, expand, del);
 
@@ -84,6 +98,7 @@ const Functionality = (function() {
         dep = new Department(title);
         DEPARTMENTS.push(dep);
     }
+
     return {addDepartment};
 })();
 
