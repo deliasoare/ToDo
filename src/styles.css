@@ -300,3 +300,12 @@ label {
         justify-items: center;
     }
 }
+.warning {
+    width: 80%;
+    background: var(--prior1);
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    top: 10%;
+    transition: 2s ease-in-out;
+}

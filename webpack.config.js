@@ -9,7 +9,8 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: '[name].js',
+        assetModuleFilename: '[name][ext]'
     },
     devServer: {
         static: {
@@ -39,6 +40,10 @@ module.exports = {
                     MiniCssExtractPlugin.loader,
                     'css-loader'
                 ]
+            },
+            {
+                test: /\.(png|jpg|svg|jpeg|eps)$/i,
+                type: 'asset/resource'
             }
         ]
     }
