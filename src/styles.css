@@ -199,30 +199,38 @@ ul {
 }
 .priorityLi {
     position: absolute;
-    right: 0;
+    right: 1%;
     top: 40%;
+    text-align:center;
 }
 
 .priorityLi {
     margin:0;
 }
-select {
-    border-radius:50%;
-    width:40px;
-    height:40px;
-    font-size: .7rem;
-    text-align: center;
+.priority {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background: var(--bg);
+    cursor: pointer;
 }
-select, input, textarea {
+.select_ul {
+    display: none;
+}
+.priority {
+    width:60px;
+    height:25px;
+    font-size: .7rem;
+    border-bottom: 1px solid var(--header);
+}
+input, textarea {
     border: none;
 }
 input:focus, input:active, textarea:focus, textarea:active{
     outline: none;
     border:1px solid var(--header);
 }
-select {
-    outline: none;
-}
+
 option {
     border: none;
     outline: none;
@@ -236,17 +244,20 @@ input {
     margin-top:2%;
     padding:1em;
     text-align:center;
-    background: var(--header);
+    background: var(--bg);
     left:35%;
     position: absolute;
-    bottom:0;
+    bottom:1%;
 }
 form, .newTask, .newDep, .colorMapMod {
     width:100%;
     height:100%;
 }
-.modalNewDep {
+.modalNewDep, .modalNewTask{
     background: var(--header);
+}
+input, textarea {
+    background: var(--bg);
 }
 .formDep {
     display:grid;
@@ -265,9 +276,7 @@ form, .newTask, .newDep, .colorMapMod {
 .textNewDep {
     font-size: 1.3rem;
 }
-#title2 {
-    background: var(--bg);
-}
+
 .addDepartment {
     padding: 0.4em 1.5em;
     font-size:1.2rem;
@@ -337,4 +346,10 @@ label {
 }
 .icon {
     height: 25px;
+}
+.descLi, .notesLi, .dateLi {
+    width: fit-content;
+}
+input, textarea {
+    padding: 1em;
 }

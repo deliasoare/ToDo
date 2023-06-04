@@ -20,6 +20,7 @@ const DEPARTMENTS = [
 ];
 
 const formDep = document.querySelector('.formDep');
+const formTask = document.querySelector('.formTask');
 
 const DOM = (function() {
     const _focusModal = (modal) => {
@@ -51,7 +52,6 @@ const DOM = (function() {
     
     const switchCategory = (category) => {
         categories.forEach(cat => {
-            console.log(cat.classList);
             if (cat.classList.value.includes('selectedCategory'))
                 cat.classList.remove('selectedCategory');
         })
@@ -91,7 +91,7 @@ const DOM = (function() {
 
             tasks.append(dep);
 
-            setTimeout(function() {console.log(dep); activateDepartmentButtons(dep)}, 0);
+            setTimeout(activateDepartmentButtons(dep), 0);
         })
     }
 
@@ -103,8 +103,30 @@ const DOM = (function() {
     const activateDepartmentButtons = (department) => {
         activatePlus(department);
     }
+    const openPrioritySelect = () => {
+        let select = document.querySelector('.select_ul');
+        select.style.display = 'block';
+    }
+    const closePrioritySelect = () => {
+        let select = document.querySelector('.select_ul');
+        select.style.display = 'none';
+    }
+    const togglePrioritySelect = () => {
+        let select = document.querySelector('.select_ul');
+        if (select.style.display === 'none')
+            openPrioritySelect();
+        else
+            closePrioritySelect();
+    }
+    const changePriority = (priority) => {
+        priority.textContent = priority.classList[1];
+        let def = document.querySelector('.default_option');
+        def.innerHTML = '';
+        def.append(priority);
+        closePrioritySelect();
+    }
 
-    return {openModal, closeModal, updateDepartments, showTemporaryWarning, switchCategory};
+    return {openModal, closeModal, changePriority, closePrioritySelect, updateDepartments, showTemporaryWarning, switchCategory, togglePrioritySelect};
 })();
 
 const Functionality = (function() {
@@ -121,6 +143,20 @@ const Functionality = (function() {
             return 0;
         dep = new Department(title);
         DEPARTMENTS.push(dep);
+    }
+
+    const addTask = (department, title, priority, description, notes, date) => {
+        let stop = false;
+        department.toDos.forEach(toDo => {
+            if (toDo.title === title) {
+                DOM.showTemporaryWarning('There already is such a task in this department!')
+                stop = true;
+            }
+        })
+        if (stop === true)
+            return 0;
+        let task = new ToDo(title, priority, description, notes, date);
+        department.push(task);
     }
 
     return {addDepartment};
@@ -150,12 +186,33 @@ formDep.addEventListener('submit', function(e) {
     e.preventDefault();
 })
 
+formTask.addEventListener('submit', function(e) {
+    const title = formTask.querySelector('#taskTitle').value;
+    const priority = formTask.querySelector('.default_option').querySelector('.priority').textContent;
+    const description = formTask.querySelector('#desc').textContent;
+    const notes = formTask.querySelector('#notes').textContent;
+    const dateValue = formTask.querySelector('#date').value;
+    let date = new Date(dateValue);
+    date = `${date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()} ${date.getDay()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+    console.log(date);
+    e.preventDefault();
+})
+
 categories.forEach(category => {
     category.addEventListener('click', function() {
         DOM.switchCategory(category);
     })
 })
 
+document.querySelector('.default_option').addEventListener('click', function() {
+    DOM.togglePrioritySelect();
+})
+
+document.querySelector('.select_ul').querySelectorAll('.priority').forEach(priority => {
+    priority.addEventListener('click', function() {
+        DOM.changePriority(priority.cloneNode());
+    });
+})
 window.onload = function() {
     DOM.updateDepartments();
 }

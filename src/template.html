@@ -37,36 +37,43 @@
         </div>
     </div>
     <div class="modal-container mod-contNewTask">
-        <div class="modal">
+        <div class="modal modalNewTask">
             <div class="newTask">
-                <form action="">
+                <form class="formTask" action="">
                     <ul>
                         <li>
-                            <label for="title">Title</label>
+                            <label for="taskTitle">Title</label>
                             <br>
-                            <input required type="text" id="title">
+                            <input maxlength="40" required type="text" id="taskTitle">
                         </li>
                         <li class="priorityLi">
-                            <select name="priority" id="priority">
-                                <option value="I">I</option>
-                                <option value="II">II</option>
-                                <option value="III">III</option>
-                            </select>
+                            <p for="priority">Priority</p>
+                            <div class="selectCont">
+                                <ul class="default_option">
+                                    <li class="priority I selectedPriority">I</li>
+                                </ul>
+                                <ul class="select_ul">
+                                    <li class="priority I">I</li>
+                                    <li class="priority II">II</li>
+                                    <li class="priority III">III</li>
+                                </ul>
+                            </div>
+                            
                         </li>
-                        <li>
+                        <li class="descLi">
                             <label for="desc">Description</label>
                             <br>
-                            <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                            <textarea name="desc" id="desc" cols="30" rows="1"></textarea>
                         </li>
-                        <li>
+                        <li class="notesLi">
                             <label for="notes">Notes</label>
                             <br>
-                            <textarea name="notes" id="notes" cols="30" rows="3"></textarea>
+                            <textarea name="notes" id="notes" cols="30" rows="1"></textarea>
                         </li>
                         <li class="dateLi">
                             <label for="date">Deadline</label>
                             <br>
-                            <input required type="date" id="date">
+                            <input required type="datetime-local" id="date">
                         </li>
                     </ul>
                     <button type="submit" class="addTask">ADD TASK</button>
