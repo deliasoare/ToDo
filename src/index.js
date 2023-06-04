@@ -33,8 +33,8 @@ const DOM = (function() {
                 input.value = '';
             })
         if (element.querySelectorAll('textarea'))
-            element.querySelectorAll('textarea').forEach(input => {
-                input.textContent = '';
+            element.querySelectorAll('textarea').forEach(area => {
+                area.value = '';
             })
     }
 
