@@ -12,6 +12,7 @@ module.exports = {
         filename: '[name].js',
         assetModuleFilename: '[name][ext]'
     },
+    devtool : 'source-map', 
     devServer: {
         static: {
             directory: path.resolve(__dirname, 'dist')

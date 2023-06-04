@@ -353,3 +353,10 @@ label {
 input, textarea {
     padding: 1em;
 }
+.toDoCont {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    gap: 5px;
+}

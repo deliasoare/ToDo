@@ -12,12 +12,11 @@ const colorMapModal = document.querySelector('.mod-contColorMap');
 const addDep = document.querySelector('.addDep');
 const colorMap = document.querySelector('.colorMap')
 const warning = document.querySelector('.warning');
-const categoryCont = document.querySelector('.categoires');
 const categories = document.querySelectorAll('.category');
-
 const DEPARTMENTS = [
     new Department('General')
 ];
+let plusClicked = DEPARTMENTS[0];
 
 const formDep = document.querySelector('.formDep');
 const formTask = document.querySelector('.formTask');
@@ -66,11 +65,27 @@ const DOM = (function() {
             warning.style.display = 'none';
         }, 3000);
     }
+    const loadTasks = (DOMdepCont, dep) => {
+        const toDoCont = document.createElement('div');
+        toDoCont.classList = 'toDoCont';
+        dep.toDos.forEach(toDo => {
+            const todo = document.createElement('div');
+            const title = document.createElement('span');
+            title.classList = 'toDoTitle';
+            title.textContent = toDo.title;
+            const done = document.createElement('img');
+            todo.append(title, done);
 
+            toDoCont.append(todo);
+        })
+        setTimeout(DOMdepCont.append(toDoCont), 0);
+    }
     const updateDepartments = () => {
         // ADD ICONS
         tasks.textContent = '';
         DEPARTMENTS.forEach(department => {
+            const depCont = document.createElement('div');
+            depCont.classList = 'depContainer';
             const dep = document.createElement('div');
             dep.classList = `department ${department.title}`;
             const plus = document.createElement('img');
@@ -88,8 +103,10 @@ const DOM = (function() {
             del.src = Minus;
 
             dep.append(plus, title, expand, del);
+            depCont.append(dep);
+            tasks.append(depCont);
 
-            tasks.append(dep);
+            loadTasks(depCont, department);
 
             setTimeout(activateDepartmentButtons(dep), 0);
         })
@@ -98,6 +115,10 @@ const DOM = (function() {
     const activatePlus = (department) => {
         department.querySelector('.depPlus').addEventListener('click', function() {
             openModal(newTaskModal);
+            DEPARTMENTS.forEach(dep => {
+                if (dep.title === department.querySelector('.depTitle').textContent)
+                    plusClicked = dep;
+            })
         })
     }
     const activateDepartmentButtons = (department) => {
@@ -156,10 +177,11 @@ const Functionality = (function() {
         if (stop === true)
             return 0;
         let task = new ToDo(title, priority, description, notes, date);
-        department.push(task);
+        department.toDos.push(task);
+        console.log(DEPARTMENTS);
     }
 
-    return {addDepartment};
+    return {addDepartment, addTask};
 })();
 
 addDep.addEventListener('click', function() {
@@ -194,8 +216,12 @@ formTask.addEventListener('submit', function(e) {
     const dateValue = formTask.querySelector('#date').value;
     let date = new Date(dateValue);
     date = `${date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()} ${date.getDay()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-    console.log(date);
+    Functionality.addTask(plusClicked, title, priority, description, notes, date);
     e.preventDefault();
+    setTimeout(function() {
+        DOM.updateDepartments();
+        DOM.closeModal(newTaskModal);
+    }, 0)
 })
 
 categories.forEach(category => {
