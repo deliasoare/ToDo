@@ -17,6 +17,9 @@
 html::-webkit-scrollbar {
     display:none;
 }
+.tasks::-webkit-scrollbar {
+    display:
+}
 
 body {
     min-height: 100vh;
@@ -71,6 +74,7 @@ body, * {
     gap: 5%;
     position: relative;
     font-size: 1.35rem;
+    overflow: scroll;
 }
 .depTitle {
     font-family: 'IM Fell English', serif;
@@ -85,7 +89,7 @@ body, * {
 }
 .department {
     display:flex;
-    width: 100%;
+    width: 80%;
     height: fit-content;
     margin-left: 10%;
     cursor: pointer;
@@ -358,5 +362,5 @@ input, textarea {
     display: flex;
     flex-direction: column;
     margin-left: 15%;
-    gap: 5px;
+    gap: 7px;
 }
