@@ -72,16 +72,16 @@ const DOM = (function() {
         tasks.textContent = '';
         DEPARTMENTS.forEach(department => {
             const dep = document.createElement('div');
-            dep.classList = `department ${department.title}Dep`;
+            dep.classList = `department ${department.title}`;
             const plus = document.createElement('img');
-            plus.classList = `depPlus icon`;
+            plus.classList = `depPlus ${department.title} icon`;
             const title = document.createElement('span');
             title.textContent = department.title;
-            title.classList = 'depTitle';
+            title.classList = `depTitle ${department.title}`;
             const expand = document.createElement('img');
-            expand.classList = `depExpand icon`;
+            expand.classList = `depExpand  ${department.title} icon`;
             const del = document.createElement('img');
-            del.classList = `depDelete icon`;
+            del.classList = `depDelete ${department.title} icon`;
 
             plus.src = Plus;
             expand.src = DownArrow;
@@ -89,10 +89,21 @@ const DOM = (function() {
 
             dep.append(plus, title, expand, del);
 
-            tasks.append(dep)
+            tasks.append(dep);
 
+            setTimeout(function() {console.log(dep); activateDepartmentButtons(dep)}, 0);
         })
     }
+
+    const activatePlus = (department) => {
+        department.querySelector('.depPlus').addEventListener('click', function() {
+            openModal(newTaskModal);
+        })
+    }
+    const activateDepartmentButtons = (department) => {
+        activatePlus(department);
+    }
+
     return {openModal, closeModal, updateDepartments, showTemporaryWarning, switchCategory};
 })();
 
@@ -135,7 +146,6 @@ formDep.addEventListener('submit', function(e) {
     setTimeout(function() {
         DOM.updateDepartments();
         DOM.closeModal(newDepModal);
-        console.log(DEPARTMENTS);
     }, 0)
     e.preventDefault();
 })
