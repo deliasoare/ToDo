@@ -63,12 +63,12 @@
                         <li class="descLi">
                             <label for="desc">Description</label>
                             <br>
-                            <textarea name="desc" id="desc" cols="25" rows="1"></textarea>
+                            <textarea name="desc" id="desc" maxlength="80" cols="25" rows="1"></textarea>
                         </li>
                         <li class="notesLi">
                             <label for="notes">Notes</label>
                             <br>
-                            <textarea name="notes" id="notes" cols="25" rows="1"></textarea>
+                            <textarea name="notes" id="notes" maxlength="80" cols="25" rows="1"></textarea>
                         </li>
                         <li class="dateLi">
                             <label for="date">Deadline</label>
@@ -116,6 +116,22 @@
                         <div class="color cp3"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container mod-contTask">
+        <div class="modal modalTask">
+            <div class="task">
+                <form class="formExistingTask" action="">
+                    <div class="topTask">
+                        <p class="existingTaskTitle"></p>
+                        <div class="existingTaskPriority"></div>
+                        <div class="existingTaskDescription"></div>
+                        <div class="existingTaskNotes"></div>
+                    </div>
+                    <div class="existingTaskDeadline"></div>
+                    <button type="submit" class="editTask">EDIT</button>
+                </form>
             </div>
         </div>
     </div>

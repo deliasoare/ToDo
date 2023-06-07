@@ -3,12 +3,14 @@ import {Department, ToDo} from './obj';
 import Plus from './assets/plus.svg';
 import DownArrow from './assets/downArrow.svg';
 import Minus from './assets/minus.svg';
+import Done from './assets/done2.svg';
 
 const tasks = document.querySelector('.tasks');
 const modals = document.querySelectorAll('.modal-container');
 const newDepModal = document.querySelector('.mod-contNewDep');
 const newTaskModal = document.querySelector('.mod-contNewTask');
 const colorMapModal = document.querySelector('.mod-contColorMap');
+const taskModal = document.querySelector('.mod-contTask');
 const addDep = document.querySelector('.addDep');
 const colorMap = document.querySelector('.colorMap')
 const warning = document.querySelector('.warning');
@@ -65,18 +67,36 @@ const DOM = (function() {
             warning.style.display = 'none';
         }, 3000);
     }
+
+    const addSelectEvent = (DOMelement, DBelement) => {
+        DOMelement.addEventListener('click', function() {
+            openModal(taskModal);
+            document.querySelector('.modalTask').classList = `modal modalTask taskModal${DBelement.priority}`;
+            document.querySelector('.existingTaskTitle').textContent = DBelement.title;
+            document.querySelector('.existingTaskPriority').textContent = DBelement.priority;
+            document.querySelector('.existingTaskDescription').innerHTML = `Description: <br> ${DBelement.description}`;
+            document.querySelector('.existingTaskNotes').innerHTML = `Notes: <br> ${DBelement.notes}`;
+            document.querySelector('.existingTaskDeadline').innerHTML = `DEADLINE: <br> ${DBelement.deadline}`;
+            document.querySelector('.editTask').classList = `editTask editTaskPr${DBelement.priority === 'I' ? 1 : (DBelement.priority === 'II' ? 2 : 3)}`;
+        })
+    }
     const loadTasks = (DOMdepCont, dep) => {
         const toDoCont = document.createElement('div');
         toDoCont.classList = 'toDoCont';
         dep.toDos.forEach(toDo => {
             const todo = document.createElement('div');
+            todo.classList = `toDo toDo${toDo.priority}`;
             const title = document.createElement('span');
             title.classList = 'toDoTitle';
             title.textContent = toDo.title;
             const done = document.createElement('img');
+            done.classList = 'done icon';
+            done.src = Done;
+
             todo.append(title, done);
 
             toDoCont.append(todo);
+            addSelectEvent(todo, toDo)
         })
         setTimeout(DOMdepCont.append(toDoCont), 0);
     }
@@ -155,7 +175,7 @@ const Functionality = (function() {
         let stop = false;
         let dep;
         DEPARTMENTS.forEach(department => {
-            if (department.title === title) {
+            if (department.title.toLowerCase() === title.toLowerCase()) {
                 DOM.showTemporaryWarning('There is already a department with this title.');
                 stop = true;
             }
@@ -169,7 +189,7 @@ const Functionality = (function() {
     const addTask = (department, title, priority, description, notes, date) => {
         let stop = false;
         department.toDos.forEach(toDo => {
-            if (toDo.title === title) {
+            if (toDo.title.toLowerCase() === title.toLowerCase()) {
                 DOM.showTemporaryWarning('There already is such a task in this department!')
                 stop = true;
             }
@@ -193,7 +213,7 @@ colorMap.addEventListener('click', function() {
 
 window.onclick = function(e) {
     modals.forEach(modal => {
-        if (modal === e.target)
+        if (modal === e.target) 
             DOM.closeModal(modal);
     })
 }
@@ -211,11 +231,11 @@ formDep.addEventListener('submit', function(e) {
 formTask.addEventListener('submit', function(e) {
     const title = formTask.querySelector('#taskTitle').value;
     const priority = formTask.querySelector('.default_option').querySelector('.priority').textContent;
-    const description = formTask.querySelector('#desc').textContent;
-    const notes = formTask.querySelector('#notes').textContent;
+    const description = formTask.querySelector('#desc').value;
+    const notes = formTask.querySelector('#notes').value;
     const dateValue = formTask.querySelector('#date').value;
     let date = new Date(dateValue);
-    date = `${date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()} ${date.getDay()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+    date = `${date.getDay()}.${date.getMonth() + 1}.${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
     Functionality.addTask(plusClicked, title, priority, description, notes, date);
     e.preventDefault();
     setTimeout(function() {
