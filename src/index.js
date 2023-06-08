@@ -15,6 +15,7 @@ const addDep = document.querySelector('.addDep');
 const colorMap = document.querySelector('.colorMap')
 const warning = document.querySelector('.warning');
 const categories = document.querySelectorAll('.category');
+let taskClicked;
 const DEPARTMENTS = [
     new Department('General')
 ];
@@ -22,6 +23,7 @@ let plusClicked = DEPARTMENTS[0];
 
 const formDep = document.querySelector('.formDep');
 const formTask = document.querySelector('.formTask');
+const formExistingTask = document.querySelector('.formExistingTask');
 
 const DOM = (function() {
     const _focusModal = (modal) => {
@@ -68,7 +70,7 @@ const DOM = (function() {
         }, 3000);
     }
 
-    const addSelectEvent = (DOMelement, DBelement) => {
+    const openTaskModalOnClick = (department, DOMelement, DBelement) => {
         DOMelement.addEventListener('click', function() {
             openModal(taskModal);
             document.querySelector('.modalTask').classList = `modal modalTask taskModal${DBelement.priority}`;
@@ -78,6 +80,8 @@ const DOM = (function() {
             document.querySelector('.existingTaskNotes').innerHTML = `Notes: <br> ${DBelement.notes}`;
             document.querySelector('.existingTaskDeadline').innerHTML = `DEADLINE: <br> ${DBelement.deadline}`;
             document.querySelector('.editTask').classList = `editTask editTaskPr${DBelement.priority === 'I' ? 1 : (DBelement.priority === 'II' ? 2 : 3)}`;
+
+            taskClicked = [department, DBelement];
         })
     }
     const loadTasks = (DOMdepCont, dep) => {
@@ -96,7 +100,7 @@ const DOM = (function() {
             todo.append(title, done);
 
             toDoCont.append(todo);
-            addSelectEvent(todo, toDo)
+            openTaskModalOnClick(dep, todo, toDo)
         })
         setTimeout(DOMdepCont.append(toDoCont), 0);
     }
@@ -105,7 +109,7 @@ const DOM = (function() {
         tasks.textContent = '';
         DEPARTMENTS.forEach(department => {
             const depCont = document.createElement('div');
-            depCont.classList = 'depContainer';
+            depCont.classList = `depContainer${department.title}`;
             const dep = document.createElement('div');
             dep.classList = `department ${department.title}`;
             const plus = document.createElement('img');
@@ -235,13 +239,30 @@ formTask.addEventListener('submit', function(e) {
     const notes = formTask.querySelector('#notes').value;
     const dateValue = formTask.querySelector('#date').value;
     let date = new Date(dateValue);
-    date = `${date.getDay()}.${date.getMonth() + 1}.${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
+    date = `${date.getFullYear()}.${date.getMonth() + 1 < 10 ? `0${date.getMonth() +1}` : date.getMonth() + 1}.${date.getDay() < 10 ? `0${date.getDay()}` : date.getDay()} at ${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
     Functionality.addTask(plusClicked, title, priority, description, notes, date);
     e.preventDefault();
     setTimeout(function() {
         DOM.updateDepartments();
         DOM.closeModal(newTaskModal);
+        console.log(newTaskModal);
     }, 0)
+})
+
+formExistingTask.addEventListener('submit', (e) => {
+    e.preventDefault();
+    DOM.closeModal(taskModal);
+    DOM.openModal(newTaskModal);
+    let department = taskClicked[0];
+    let toDo = taskClicked[1];
+    newTaskModal.querySelector('#taskTitle').value = toDo.title;
+    newTaskModal.querySelector('#desc').value = toDo.description;
+    newTaskModal.querySelector('#notes').value = toDo.notes;
+    newTaskModal.querySelector('.default_option').querySelector('.priority').textContent = toDo.priority;
+    let date = toDo.deadline.replaceAll('.', '-');
+    date = date.replace(' at ', 'T');
+    console.log(date)
+    newTaskModal.querySelector('#date').value = date;
 })
 
 categories.forEach(category => {
