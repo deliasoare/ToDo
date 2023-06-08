@@ -50,6 +50,9 @@ const DOM = (function() {
     const closeModal = (modal) => {
         modal.style.display = 'none';
         _clearAllInputs(modal);
+
+        if (modal === newTaskModal)
+            closeTaskModal();
         
     }
     
@@ -82,6 +85,8 @@ const DOM = (function() {
             document.querySelector('.editTask').classList = `editTask editTaskPr${DBelement.priority === 'I' ? 1 : (DBelement.priority === 'II' ? 2 : 3)}`;
 
             taskClicked = [department, DBelement];
+
+            openTaskModalToEdit();
         })
     }
     const loadTasks = (DOMdepCont, dep) => {
@@ -170,8 +175,26 @@ const DOM = (function() {
         def.append(priority);
         closePrioritySelect();
     }
+    const openTaskModalToEdit = () => {
+        document.querySelector('.addTask').style.display = 'none';
+        const edit = document.createElement('button');
+        edit.type = 'submit';
+        edit.textContent = 'EDIT';
+        edit.classList = 'editTaskBtn';
 
-    return {openModal, closeModal, changePriority, closePrioritySelect, updateDepartments, showTemporaryWarning, switchCategory, togglePrioritySelect};
+        newTaskModal.querySelector('form').append(edit);
+
+        edit.addEventListener('click', function() {
+            const [title, priority, description, notes, date] = Functionality.extractTaskData();
+            processInfoEditTask(taskClicked[1], title, priority, description, notes, date);
+        });
+    }
+    const closeTaskModal = () => {
+        if (document.querySelector('.editTaskBtn'))
+            document.querySelector('.editTaskBtn').remove();
+    }
+
+    return {openModal, openTaskModalToEdit, closeModal, changePriority, closePrioritySelect, updateDepartments, showTemporaryWarning, switchCategory, togglePrioritySelect};
 })();
 
 const Functionality = (function() {
@@ -189,6 +212,17 @@ const Functionality = (function() {
         dep = new Department(title);
         DEPARTMENTS.push(dep);
     }
+    const extractTaskData = () => {
+        const title = formTask.querySelector('#taskTitle').value;
+        const priority = formTask.querySelector('.default_option').querySelector('.priority').textContent;
+        const description = formTask.querySelector('#desc').value;
+        const notes = formTask.querySelector('#notes').value;
+        const dateValue = formTask.querySelector('#date').value;
+        let date = new Date(dateValue);
+        date = `${date.getFullYear()}.${date.getMonth() + 1 < 10 ? `0${date.getMonth() +1}` : date.getMonth() + 1}.${date.getDay() < 10 ? `0${date.getDay()}` : date.getDay()} at ${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
+
+        return [title, priority, description, notes, date];
+    }
 
     const addTask = (department, title, priority, description, notes, date) => {
         let stop = false;
@@ -204,9 +238,22 @@ const Functionality = (function() {
         department.toDos.push(task);
         console.log(DEPARTMENTS);
     }
+    const editTask = (task, title, priority, description, notes, date) => {
+        task.title = title;
+        task.priority = priority;
+        task.description = description;
+        task.notes = notes;
+        task.deadline = date;
+    }
 
-    return {addDepartment, addTask};
+    return {addDepartment, addTask, editTask, extractTaskData};
 })();
+
+function processInfoEditTask(task, title, priority, description, notes, date) {
+    Functionality.editTask(task, title, priority, description, notes, date);
+    DOM.updateDepartments();
+    setTimeout(DOM.closeModal(newTaskModal));
+}
 
 addDep.addEventListener('click', function() {
     DOM.openModal(newDepModal);
@@ -233,15 +280,9 @@ formDep.addEventListener('submit', function(e) {
 })
 
 formTask.addEventListener('submit', function(e) {
-    const title = formTask.querySelector('#taskTitle').value;
-    const priority = formTask.querySelector('.default_option').querySelector('.priority').textContent;
-    const description = formTask.querySelector('#desc').value;
-    const notes = formTask.querySelector('#notes').value;
-    const dateValue = formTask.querySelector('#date').value;
-    let date = new Date(dateValue);
-    date = `${date.getFullYear()}.${date.getMonth() + 1 < 10 ? `0${date.getMonth() +1}` : date.getMonth() + 1}.${date.getDay() < 10 ? `0${date.getDay()}` : date.getDay()} at ${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
-    Functionality.addTask(plusClicked, title, priority, description, notes, date);
     e.preventDefault();
+    const [title, priority, description, notes, date] = Functionality.extractTaskData();
+    Functionality.addTask(plusClicked, title, priority, description, notes, date);
     setTimeout(function() {
         DOM.updateDepartments();
         DOM.closeModal(newTaskModal);

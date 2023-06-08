@@ -248,7 +248,7 @@ input {
     padding: 0.5em;
 }
 
-.addTask{
+.addTask, .editTaskBtn {
     margin-top:2%;
     padding:1em;
     text-align:center;
