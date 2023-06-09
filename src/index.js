@@ -45,13 +45,14 @@ const DOM = (function() {
     const openModal = (modal) => {
         modal.style.display = 'flex';
         _focusModal(modal);
+
     }
 
     const closeModal = (modal) => {
         modal.style.display = 'none';
         _clearAllInputs(modal);
 
-        if (modal === newTaskModal)
+        if (modal === newTaskModal) 
             closeTaskModal();
         
     }
@@ -144,6 +145,7 @@ const DOM = (function() {
     const activatePlus = (department) => {
         department.querySelector('.depPlus').addEventListener('click', function() {
             openModal(newTaskModal);
+            openTaskModal();
             DEPARTMENTS.forEach(dep => {
                 if (dep.title === department.querySelector('.depTitle').textContent)
                     plusClicked = dep;
@@ -179,7 +181,7 @@ const DOM = (function() {
         document.querySelector('.addTask').style.display = 'none';
         const edit = document.createElement('button');
         edit.type = 'submit';
-        edit.textContent = 'EDIT';
+        edit.textContent = 'OK';
         edit.classList = 'editTaskBtn';
 
         newTaskModal.querySelector('form').append(edit);
@@ -192,6 +194,11 @@ const DOM = (function() {
     const closeTaskModal = () => {
         if (document.querySelector('.editTaskBtn'))
             document.querySelector('.editTaskBtn').remove();
+    }
+    const openTaskModal = () => {
+        document.querySelector('.addTask').style.display = 'block';
+        if (document.querySelector('.editTaskBtn')) 
+            document.querySelector('.editTaskBtn').style.display = 'none';
     }
 
     return {openModal, openTaskModalToEdit, closeModal, changePriority, closePrioritySelect, updateDepartments, showTemporaryWarning, switchCategory, togglePrioritySelect};
