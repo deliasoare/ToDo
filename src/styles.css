@@ -219,7 +219,7 @@ ul {
     display: flex;
     justify-content:center;
     align-items: center;
-    background: var(--bg);
+    background: var(--header);
     cursor: pointer;
 }
 .select_ul {
@@ -265,10 +265,10 @@ form, .newTask, .newDep, .colorMapMod, .task {
     height:100%;
 }
 .modalNewDep, .modalNewTask{
-    background: var(--header);
+    background: var(--bg);
 }
 input, textarea {
-    background: var(--bg);
+    background: var(--header);
 }
 .formDep {
     display:grid;

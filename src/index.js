@@ -3,7 +3,7 @@ import {Department, ToDo} from './obj';
 import Plus from './assets/plus.svg';
 import DownArrow from './assets/downArrow.svg';
 import Minus from './assets/minus.svg';
-import Done from './assets/done2.svg';
+import Done from './assets/done3.svg';
 
 const tasks = document.querySelector('.tasks');
 const modals = document.querySelectorAll('.modal-container');
@@ -179,6 +179,7 @@ const DOM = (function() {
     }
     const openTaskModalToEdit = () => {
         document.querySelector('.addTask').style.display = 'none';
+        document.querySelector('.select_ul').style.display = 'none';
         const edit = document.createElement('button');
         edit.type = 'submit';
         edit.textContent = 'OK';
