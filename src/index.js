@@ -1,5 +1,6 @@
 import './styles.css';
 import {Department, ToDo} from './obj';
+import {toggleShowTasks} from './depSecondFunc';
 import Plus from './assets/plus.svg';
 import DownArrow from './assets/downArrow.svg';
 import Minus from './assets/minus.svg';
@@ -131,7 +132,6 @@ const DOM = (function() {
             plus.src = Plus;
             expand.src = DownArrow;
             del.src = Minus;
-
             dep.append(plus, title, expand, del);
             depCont.append(dep);
             tasks.append(depCont);
@@ -152,8 +152,14 @@ const DOM = (function() {
             })
         })
     }
+    const activateClick = (department) => {
+        department.addEventListener('click', () => {
+            toggleShowTasks(department.parentNode);
+        })
+    }
     const activateDepartmentButtons = (department) => {
         activatePlus(department);
+        activateClick(department);
     }
     const openPrioritySelect = () => {
         let select = document.querySelector('.select_ul');
@@ -332,3 +338,4 @@ document.querySelector('.select_ul').querySelectorAll('.priority').forEach(prior
 window.onload = function() {
     DOM.updateDepartments();
 }
+
