@@ -1,7 +1,7 @@
 import './styles.css';
 import {Department, ToDo} from './obj';
-import {toggleShowTasks} from './depSecondFunc';
 import Plus from './assets/plus.svg';
+import UpArrow from './assets/upArrow.svg';
 import DownArrow from './assets/downArrow.svg';
 import Minus from './assets/minus.svg';
 import Done from './assets/done3.svg';
@@ -154,13 +154,21 @@ const DOM = (function() {
     }
     const activateClick = (department) => {
         department.addEventListener('click', () => {
-            toggleShowTasks(department.parentNode);
+            DOM.toggleShowTasks(department.parentNode);
         })
+    }
+    const activateDelete = (department) => {
+        department.querySelector('.depDelete').addEventListener('click', function() {
+        Functionality.deleteDepartment(department);
+        updateDepartments();
+    })
     }
     const activateDepartmentButtons = (department) => {
         activatePlus(department);
         activateClick(department);
+        activateDelete(department);
     }
+
     const openPrioritySelect = () => {
         let select = document.querySelector('.select_ul');
         select.style.display = 'block';
@@ -208,7 +216,21 @@ const DOM = (function() {
             document.querySelector('.editTaskBtn').style.display = 'none';
     }
 
-    return {openModal, openTaskModalToEdit, closeModal, changePriority, closePrioritySelect, updateDepartments, showTemporaryWarning, switchCategory, togglePrioritySelect};
+    const toggleShowTasks = (department) => {
+        console.log(department.querySelector('.toDoCont'));
+        if (department.querySelector('.toDoCont').innerHTML) {
+            const toDoContainer = department.querySelector('.toDoCont');
+            if (toDoContainer.style.display === 'none') {
+                toDoContainer.style.display = 'flex';
+                department.querySelector('.depExpand').src = DownArrow;   
+            }
+            else {
+                toDoContainer.style.display = 'none';
+                department.querySelector('.depExpand').src = UpArrow;   
+            }
+        }
+    }
+    return {openModal, openTaskModalToEdit, closeModal, changePriority, closePrioritySelect, updateDepartments, showTemporaryWarning, switchCategory, togglePrioritySelect, toggleShowTasks};
 })();
 
 const Functionality = (function() {
@@ -259,8 +281,15 @@ const Functionality = (function() {
         task.notes = notes;
         task.deadline = date;
     }
+    
+    const deleteDepartment = (departmentDOM) => {
+        for (let i = 0; i < DEPARTMENTS.length; i++) {
+            if (DEPARTMENTS[i].title === departmentDOM.querySelector('.depTitle').textContent)
+                DEPARTMENTS.splice(i, 1);
+        }
+    }
 
-    return {addDepartment, addTask, editTask, extractTaskData};
+    return {addDepartment, addTask, deleteDepartment, editTask, extractTaskData};
 })();
 
 function processInfoEditTask(task, title, priority, description, notes, date) {
