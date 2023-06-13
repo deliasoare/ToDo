@@ -158,14 +158,10 @@ const DOM = (function() {
                                 if (Number(toDo.deadline[17] + toDo.deadline[18]) < currentTime.getMinutes()) {
                                     todo = loadTask(toDo);
                                     toDoCont.append(todo);
-                                }
-                           
-
-
+                                }   
             })
         }
-
-        return toDoCont;
+       return toDoCont;
     }
 
     const updateDepartment = (department) => {
@@ -213,8 +209,9 @@ const DOM = (function() {
         })
     }
     const activateClick = (department) => {
-        department.addEventListener('click', () => {
-            DOM.toggleShowTasks(department.parentNode);
+        department.addEventListener('click', (e) => {
+            if (e.target !== department.querySelector('.depPlus') && e.target !== department.querySelector('.depDelete'))
+                DOM.toggleShowTasks(department.parentNode);
         })
     }
     const activateDelete = (department) => {
