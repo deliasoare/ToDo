@@ -94,9 +94,19 @@ const DOM = (function() {
             openTaskModalToEdit();
         })
     }
+    const activateMarkAsDone = (todo, toDo) => {
+        todo.querySelector('.done').addEventListener('click', function() {
+          todo.classList.add('doneTask');
+
+          Functionality.markTaskAsDone(toDo);  
+        })
+    }
     const loadTask = (toDo, dep) => {
         const todo = document.createElement('div');
         todo.classList = `toDo toDo${toDo.priority}`;
+        if (toDo.done === true) {
+            todo.classList.add('doneTask');
+        }
         const title = document.createElement('span');
         title.classList = 'toDoTitle';
         title.textContent = toDo.title;
@@ -106,7 +116,9 @@ const DOM = (function() {
 
         todo.append(title, done);
 
-        openTaskModalOnClick(dep, todo, toDo)
+        openTaskModalOnClick(dep, todo, toDo);
+
+        activateMarkAsDone(todo, toDo);
 
         return todo;
 }
@@ -340,8 +352,12 @@ const Functionality = (function() {
                 DEPARTMENTS.splice(i, 1);
         }
     }
+    
+    const markTaskAsDone = (task) => {
+        task.done = true;
+    }
 
-    return {addDepartment, addTask, deleteDepartment, editTask, extractTaskData};
+    return {addDepartment, addTask, deleteDepartment, editTask, extractTaskData, markTaskAsDone};
 })();
 
 function processInfoEditTask(task, title, priority, description, notes, date) {
