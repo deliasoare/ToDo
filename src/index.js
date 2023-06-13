@@ -131,25 +131,21 @@ const DOM = (function() {
         else if (currentCategory === 'missed') {
             dep.toDos.forEach(toDo => {       
                 const currentTime = new Date();
-                console.log(toDo.deadline);
                 if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) < currentTime.getFullYear()) {
-                    console.log('here');
                     todo = loadTask(toDo);
                     toDoCont.append(todo);
                 }
                 else if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) === currentTime.getFullYear()) 
                     if (Number(toDo.deadline[5] + toDo.deadline[6]) < currentTime.getMonth() + 1) {
-                        console.log('here2');
                         todo = loadTask(toDo);
                         toDoCont.append(todo);
                     }
                     else if (Number(toDo.deadline[5] + toDo.deadline[6]) === currentTime.getMonth() + 1)
-                        if (Number(toDo.deadline[8] + toDo.deadline[9]) < currentTime.getDay()) {
-                            console.log('here3');
+                        if (Number(toDo.deadline[8] + toDo.deadline[9]) < currentTime.getDate()) {
                             todo = loadTask(toDo);
                             toDoCont.append(todo);
                         }
-                        else if (Number(toDo.deadline[8] + toDo.deadline[9]) === currentTime.getDay())
+                        else if (Number(toDo.deadline[8] + toDo.deadline[9]) === currentTime.getDate())
                              if (Number(toDo.deadline[14] + toDo.deadline[15]) < currentTime.getHours()) {
                                 todo = loadTask(toDo);
                                 toDoCont.append(todo);
@@ -312,7 +308,7 @@ const Functionality = (function() {
         const notes = formTask.querySelector('#notes').value;
         const dateValue = formTask.querySelector('#date').value;
         let date = new Date(dateValue);
-        date = `${date.getFullYear()}.${date.getMonth() + 1 < 10 ? `0${date.getMonth() +1}` : date.getMonth() + 1}.${date.getDay() < 10 ? `0${date.getDay()}` : date.getDay()} at ${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
+        date = `${date.getFullYear()}.${date.getMonth() + 1 < 10 ? `0${date.getMonth() +1}` : date.getMonth() + 1}.${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()} at ${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes()<10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
 
         return [title, priority, description, notes, date];
     }
