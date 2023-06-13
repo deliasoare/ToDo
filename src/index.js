@@ -80,19 +80,20 @@ const DOM = (function() {
 
     const openMod = function(department, DOMelement, DBelement) {
         const handler = function(e) {
-            openModal(taskModal)
-            document.querySelector('.modalTask').classList = `modal modalTask taskModal${DBelement.priority}`;
-            document.querySelector('.existingTaskTitle').textContent = DBelement.title;
-            document.querySelector('.existingTaskPriority').textContent = DBelement.priority;
-            document.querySelector('.existingTaskDescription').innerHTML = `Description: <br> ${DBelement.description}`;
-            document.querySelector('.existingTaskNotes').innerHTML = `Notes: <br> ${DBelement.notes}`;
-            document.querySelector('.existingTaskDeadline').innerHTML = `DEADLINE: <br> ${DBelement.deadline}`;
-            document.querySelector('.editTask').classList = `editTask editTaskPr${DBelement.priority === 'I' ? 1 : (DBelement.priority === 'II' ? 2 : 3)}`;
+            if (e.target !== DOMelement.querySelector('.done')) {
+                openModal(taskModal)
+                document.querySelector('.modalTask').classList = `modal modalTask taskModal${DBelement.priority}`;
+                document.querySelector('.existingTaskTitle').textContent = DBelement.title;
+                document.querySelector('.existingTaskPriority').textContent = DBelement.priority;
+                document.querySelector('.existingTaskDescription').innerHTML = `Description: <br> ${DBelement.description}`;
+                document.querySelector('.existingTaskNotes').innerHTML = `Notes: <br> ${DBelement.notes}`;
+                document.querySelector('.existingTaskDeadline').innerHTML = `DEADLINE: <br> ${DBelement.deadline}`;
+                document.querySelector('.editTask').classList = `editTask editTaskPr${DBelement.priority === 'I' ? 1 : (DBelement.priority === 'II' ? 2 : 3)}`;
 
-            taskClicked = [department, DBelement];
+                taskClicked = [department, DBelement];
 
-            openTaskModalToEdit();
-            
+                openTaskModalToEdit();
+        }
             for (let i = 0; i < DOMelement.classList.length; i++)
                 if (DOMelement.classList[i] === 'doneTask')
                     DOMelement.removeEventListener('click', handler);
