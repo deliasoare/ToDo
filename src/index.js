@@ -141,32 +141,42 @@ const DOM = (function() {
             })
         }
         else if (currentCategory === 'missed') {
-            dep.toDos.forEach(toDo => {       
-                const currentTime = new Date();
-                if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) < currentTime.getFullYear()) {
-                    todo = loadTask(toDo);
-                    toDoCont.append(todo);
-                }
-                else if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) === currentTime.getFullYear()) 
-                    if (Number(toDo.deadline[5] + toDo.deadline[6]) < currentTime.getMonth() + 1) {
+            dep.toDos.forEach(toDo => {
+                if (toDo.done === false) {
+                    const currentTime = new Date();
+                    if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) < currentTime.getFullYear()) {
                         todo = loadTask(toDo);
                         toDoCont.append(todo);
                     }
-                    else if (Number(toDo.deadline[5] + toDo.deadline[6]) === currentTime.getMonth() + 1)
-                        if (Number(toDo.deadline[8] + toDo.deadline[9]) < currentTime.getDate()) {
+                    else if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) === currentTime.getFullYear()) 
+                        if (Number(toDo.deadline[5] + toDo.deadline[6]) < currentTime.getMonth() + 1) {
                             todo = loadTask(toDo);
                             toDoCont.append(todo);
                         }
-                        else if (Number(toDo.deadline[8] + toDo.deadline[9]) === currentTime.getDate())
-                             if (Number(toDo.deadline[14] + toDo.deadline[15]) < currentTime.getHours()) {
+                        else if (Number(toDo.deadline[5] + toDo.deadline[6]) === currentTime.getMonth() + 1)
+                            if (Number(toDo.deadline[8] + toDo.deadline[9]) < currentTime.getDate()) {
                                 todo = loadTask(toDo);
                                 toDoCont.append(todo);
-                             }
-                             else if (Number(toDo.deadline[14] + toDo.deadline[15]) === currentTime.getHours())
-                                if (Number(toDo.deadline[17] + toDo.deadline[18]) < currentTime.getMinutes()) {
+                            }
+                            else if (Number(toDo.deadline[8] + toDo.deadline[9]) === currentTime.getDate())
+                                if (Number(toDo.deadline[14] + toDo.deadline[15]) < currentTime.getHours()) {
                                     todo = loadTask(toDo);
                                     toDoCont.append(todo);
-                                }   
+                                }
+                                else if (Number(toDo.deadline[14] + toDo.deadline[15]) === currentTime.getHours())
+                                    if (Number(toDo.deadline[17] + toDo.deadline[18]) < currentTime.getMinutes()) {
+                                        todo = loadTask(toDo);
+                                        toDoCont.append(todo);
+                                    }
+                }   
+            })
+        }
+        else if (currentCategory === 'left') {
+            dep.toDos.forEach(toDo => {
+                if (toDo.done === false) {
+                    todo = loadTask(toDo);
+                    toDoCont.append(todo);
+                }
             })
         }
        return toDoCont;
