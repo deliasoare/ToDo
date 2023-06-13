@@ -23,6 +23,7 @@ let taskClicked;
 export const DEPARTMENTS = [
     new Department('General')
 ];
+
 let plusClicked = DEPARTMENTS[0];
 
 const formDep = document.querySelector('.formDep');

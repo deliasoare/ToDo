@@ -346,14 +346,23 @@ label {
         justify-items: center;
     }
 }
+.warningCont {
+    width: 100%;
+    display:flex;
+    justify-content:center;
+    height:fit-content;
+    position:absolute;
+}
 .warning {
     width: 80%;
     background: var(--prior1);
     border-radius: 10px;
     display: none;
     position: absolute;
-    top: 10%;
+    top: 20%;
     transition: 2s ease-in-out;
+    text-align:center;
+    padding:1em;
 }
 .icon {
     height: 25px;
