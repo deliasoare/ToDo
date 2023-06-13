@@ -78,9 +78,9 @@ const DOM = (function() {
         }, 3000);
     }
 
-    const openTaskModalOnClick = (department, DOMelement, DBelement) => {
-        DOMelement.addEventListener('click', function() {
-            openModal(taskModal);
+    const openMod = function(department, DOMelement, DBelement) {
+        const handler = function(e) {
+            openModal(taskModal)
             document.querySelector('.modalTask').classList = `modal modalTask taskModal${DBelement.priority}`;
             document.querySelector('.existingTaskTitle').textContent = DBelement.title;
             document.querySelector('.existingTaskPriority').textContent = DBelement.priority;
@@ -92,12 +92,19 @@ const DOM = (function() {
             taskClicked = [department, DBelement];
 
             openTaskModalToEdit();
-        })
+            
+            for (let i = 0; i < DOMelement.classList.length; i++)
+                if (DOMelement.classList[i] === 'doneTask')
+                    DOMelement.removeEventListener('click', handler);
+        }
+        return handler;
+    }
+    const openTaskModalOnClick = (department, DOMelement, DBelement) => {
+        DOMelement.addEventListener('click', openMod(department, DOMelement, DBelement))
     }
     const activateMarkAsDone = (todo, toDo) => {
         todo.querySelector('.done').addEventListener('click', function() {
           todo.classList.add('doneTask');
-
           Functionality.markTaskAsDone(toDo);  
         })
     }
