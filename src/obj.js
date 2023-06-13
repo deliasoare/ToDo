@@ -15,5 +15,6 @@ export class ToDo {
         this.description = description;
         this.notes = notes;
         this.deadline = deadline;
+        this.done = false;
     }
 }

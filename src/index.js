@@ -16,8 +16,11 @@ const addDep = document.querySelector('.addDep');
 const colorMap = document.querySelector('.colorMap')
 const warning = document.querySelector('.warning');
 const categories = document.querySelectorAll('.category');
+
+let currentCategory = 'all';
 let taskClicked;
-const DEPARTMENTS = [
+
+export const DEPARTMENTS = [
     new Department('General')
 ];
 let plusClicked = DEPARTMENTS[0];
@@ -91,30 +94,83 @@ const DOM = (function() {
             openTaskModalToEdit();
         })
     }
-    const loadTasks = (DOMdepCont, dep) => {
+    const loadTask = (toDo, dep) => {
+        const todo = document.createElement('div');
+        todo.classList = `toDo toDo${toDo.priority}`;
+        const title = document.createElement('span');
+        title.classList = 'toDoTitle';
+        title.textContent = toDo.title;
+        const done = document.createElement('img');
+        done.classList = 'done icon';
+        done.src = Done;
+
+        todo.append(title, done);
+
+        openTaskModalOnClick(dep, todo, toDo)
+
+        return todo;
+}
+    const loadTasks = (dep) => {
         const toDoCont = document.createElement('div');
         toDoCont.classList = 'toDoCont';
-        dep.toDos.forEach(toDo => {
-            const todo = document.createElement('div');
-            todo.classList = `toDo toDo${toDo.priority}`;
-            const title = document.createElement('span');
-            title.classList = 'toDoTitle';
-            title.textContent = toDo.title;
-            const done = document.createElement('img');
-            done.classList = 'done icon';
-            done.src = Done;
+        let todo;
+        if (currentCategory === 'all') {
+            dep.toDos.forEach(toDo => {
+                todo = loadTask(toDo);
+                toDoCont.append(todo);
+            })
+        }
+        else if (currentCategory === 'done') {
+            dep.toDos.forEach(toDo => {
+                if (toDo.done === true) {
+                    todo = loadTask(toDo);
+                    toDoCont.append(todo);
+                }
+            })
+        }
+        else if (currentCategory === 'missed') {
+            dep.toDos.forEach(toDo => {       
+                const currentTime = new Date();
+                console.log(toDo.deadline);
+                if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) < currentTime.getFullYear()) {
+                    console.log('here');
+                    todo = loadTask(toDo);
+                    toDoCont.append(todo);
+                }
+                else if (Number(toDo.deadline[0] + toDo.deadline[1] + toDo.deadline[2] + toDo.deadline[3]) === currentTime.getFullYear()) 
+                    if (Number(toDo.deadline[5] + toDo.deadline[6]) < currentTime.getMonth() + 1) {
+                        console.log('here2');
+                        todo = loadTask(toDo);
+                        toDoCont.append(todo);
+                    }
+                    else if (Number(toDo.deadline[5] + toDo.deadline[6]) === currentTime.getMonth() + 1)
+                        if (Number(toDo.deadline[8] + toDo.deadline[9]) < currentTime.getDay()) {
+                            console.log('here3');
+                            todo = loadTask(toDo);
+                            toDoCont.append(todo);
+                        }
+                        else if (Number(toDo.deadline[8] + toDo.deadline[9]) === currentTime.getDay())
+                             if (Number(toDo.deadline[14] + toDo.deadline[15]) < currentTime.getHours()) {
+                                todo = loadTask(toDo);
+                                toDoCont.append(todo);
+                             }
+                             else if (Number(toDo.deadline[14] + toDo.deadline[15]) === currentTime.getHours())
+                                if (Number(toDo.deadline[17] + toDo.deadline[18]) < currentTime.getMinutes()) {
+                                    todo = loadTask(toDo);
+                                    toDoCont.append(todo);
+                                }
+                           
 
-            todo.append(title, done);
 
-            toDoCont.append(todo);
-            openTaskModalOnClick(dep, todo, toDo)
-        })
-        setTimeout(DOMdepCont.append(toDoCont), 0);
+            })
+        }
+
+        return toDoCont;
     }
-    const updateDepartments = () => {
-        // ADD ICONS
-        tasks.textContent = '';
-        DEPARTMENTS.forEach(department => {
+
+    const updateDepartment = (department) => {
+        let toDoCont = loadTasks(department);
+        if (toDoCont) {
             const depCont = document.createElement('div');
             depCont.classList = `depContainer${department.title}`;
             const dep = document.createElement('div');
@@ -134,13 +190,17 @@ const DOM = (function() {
             del.src = Minus;
             dep.append(plus, title, expand, del);
             depCont.append(dep);
+            depCont.append(toDoCont);
             tasks.append(depCont);
-
-            loadTasks(depCont, department);
-
             setTimeout(activateDepartmentButtons(dep), 0);
-        })
-    }
+        }
+ }
+    const updateDepartments = () => {
+        tasks.textContent = '';
+        DEPARTMENTS.forEach(department => {
+            updateDepartment(department);
+    })
+}
 
     const activatePlus = (department) => {
         department.querySelector('.depPlus').addEventListener('click', function() {
@@ -199,7 +259,8 @@ const DOM = (function() {
         edit.textContent = 'OK';
         edit.classList = 'editTaskBtn';
 
-        newTaskModal.querySelector('form').append(edit);
+        if (!newTaskModal.querySelector('form').querySelector('.editTaskBtn'))
+            newTaskModal.querySelector('form').append(edit);
 
         edit.addEventListener('click', function() {
             const [title, priority, description, notes, date] = Functionality.extractTaskData();
@@ -217,7 +278,6 @@ const DOM = (function() {
     }
 
     const toggleShowTasks = (department) => {
-        console.log(department.querySelector('.toDoCont'));
         if (department.querySelector('.toDoCont').innerHTML) {
             const toDoContainer = department.querySelector('.toDoCont');
             if (toDoContainer.style.display === 'none') {
@@ -272,7 +332,6 @@ const Functionality = (function() {
             return 0;
         let task = new ToDo(title, priority, description, notes, date);
         department.toDos.push(task);
-        console.log(DEPARTMENTS);
     }
     const editTask = (task, title, priority, description, notes, date) => {
         task.title = title;
@@ -329,7 +388,6 @@ formTask.addEventListener('submit', function(e) {
     setTimeout(function() {
         DOM.updateDepartments();
         DOM.closeModal(newTaskModal);
-        console.log(newTaskModal);
     }, 0)
 })
 
@@ -345,13 +403,14 @@ formExistingTask.addEventListener('submit', (e) => {
     newTaskModal.querySelector('.default_option').querySelector('.priority').textContent = toDo.priority;
     let date = toDo.deadline.replaceAll('.', '-');
     date = date.replace(' at ', 'T');
-    console.log(date)
     newTaskModal.querySelector('#date').value = date;
 })
 
 categories.forEach(category => {
     category.addEventListener('click', function() {
         DOM.switchCategory(category);
+        currentCategory = category.classList[0];
+        DOM.updateDepartments();
     })
 })
 
