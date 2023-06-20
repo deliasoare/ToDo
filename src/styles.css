@@ -466,5 +466,6 @@ input, textarea {
 }
 .doneTask {
     text-decoration:line-through;
+    color: gray;
     transition: ease-in-out;
 }
