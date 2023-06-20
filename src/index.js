@@ -20,11 +20,13 @@ const categories = document.querySelectorAll('.category');
 let currentCategory = 'all';
 let taskClicked;
 
-export const DEPARTMENTS = [
-    new Department('General')
-];
+if (!window.localStorage.getItem('DEPARTMENTS')) {
+    window.localStorage.setItem('DEPARTMENTS', JSON.stringify([
+        new Department('General')
+    ]))
+}
 
-let plusClicked = DEPARTMENTS[0];
+let plusClicked = (JSON.parse(window.localStorage.getItem('DEPARTMENTS')))[0];
 
 const formDep = document.querySelector('.formDep');
 const formTask = document.querySelector('.formTask');
@@ -192,6 +194,7 @@ const DOM = (function() {
     }
 
     const updateDepartment = (department) => {
+        console.log(department);
         let toDoCont = loadTasks(department);
         if (toDoCont) {
             const depCont = document.createElement('div');
@@ -220,7 +223,7 @@ const DOM = (function() {
  }
     const updateDepartments = () => {
         tasks.textContent = '';
-        DEPARTMENTS.forEach(department => {
+        (JSON.parse(window.localStorage.getItem('DEPARTMENTS'))).forEach(department => {
             updateDepartment(department);
     })
 }
@@ -229,9 +232,11 @@ const DOM = (function() {
         department.querySelector('.depPlus').addEventListener('click', function() {
             openModal(newTaskModal);
             openTaskModal();
+            const DEPARTMENTS = JSON.parse(window.localStorage.getItem('DEPARTMENTS'));
             DEPARTMENTS.forEach(dep => {
-                if (dep.title === department.querySelector('.depTitle').textContent)
+                if (dep.title === department.querySelector('.depTitle').textContent) {
                     plusClicked = dep;
+                }
             })
         })
     }
@@ -321,7 +326,7 @@ const Functionality = (function() {
     const addDepartment = (title) => {
         let stop = false;
         let dep;
-        DEPARTMENTS.forEach(department => {
+        (JSON.parse(window.localStorage.getItem('DEPARTMENTS'))).forEach(department => {
             if (department.title.toLowerCase() === title.toLowerCase()) {
                 DOM.showTemporaryWarning('There is already a department with this title.');
                 stop = true;
@@ -330,7 +335,9 @@ const Functionality = (function() {
         if (stop === true)
             return 0;
         dep = new Department(title);
-        DEPARTMENTS.push(dep);
+        let departments = JSON.parse(window.localStorage.getItem('DEPARTMENTS'));
+        departments.push(dep);
+        window.localStorage.setItem('DEPARTMENTS', JSON.stringify(departments));
     }
     const extractTaskData = () => {
         const title = formTask.querySelector('#taskTitle').value;
@@ -355,7 +362,17 @@ const Functionality = (function() {
         if (stop === true)
             return 0;
         let task = new ToDo(title, priority, description, notes, date);
-        department.toDos.push(task);
+        const DEPARTMENTS = (JSON.parse(window.localStorage.getItem('DEPARTMENTS')));
+        let i;
+        for (i = 0; i < DEPARTMENTS.length; i++) {
+            if (DEPARTMENTS[i].title === department.title) {
+                    console.log('here');
+                    DEPARTMENTS[i].toDos.push(task);
+                }
+        }
+        setTimeout(function() {
+            window.localStorage.setItem('DEPARTMENTS', JSON.stringify(DEPARTMENTS));
+        }, 0)
     }
     const editTask = (task, title, priority, description, notes, date) => {
         task.title = title;
@@ -366,10 +383,14 @@ const Functionality = (function() {
     }
     
     const deleteDepartment = (departmentDOM) => {
+        let DEPARTMENTS = JSON.parse(window.localStorage.getItem('DEPARTMENTS'));
         for (let i = 0; i < DEPARTMENTS.length; i++) {
             if (DEPARTMENTS[i].title === departmentDOM.querySelector('.depTitle').textContent)
                 DEPARTMENTS.splice(i, 1);
         }
+        setTimeout(function() {
+            window.localStorage.setItem('DEPARTMENTS', JSON.stringify(DEPARTMENTS));
+        }, 0)
     }
     
     const markTaskAsDone = (task) => {
@@ -453,5 +474,6 @@ document.querySelector('.select_ul').querySelectorAll('.priority').forEach(prior
 })
 window.onload = function() {
     DOM.updateDepartments();
+
 }
 
