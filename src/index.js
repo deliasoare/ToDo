@@ -279,13 +279,30 @@ const DOM = (function() {
         def.append(priority);
         closePrioritySelect();
     }
+
+    const submitEditOnEnter = (e) => {
+        if (e.key === "Enter")
+            document.querySelector('.editTaskBtn').click();
+    }
+    const submitTaskOnEnter = (e) => {
+        if (e.key === "Enter")
+            document.querySelector('.addTask').click();
+    }
     const openTaskModalToEdit = () => {
         document.querySelector('.addTask').style.display = 'none';
+        document.querySelector('.addTask').disabled = true;
         document.querySelector('.select_ul').style.display = 'none';
         const edit = document.createElement('button');
         edit.type = 'submit';
         edit.textContent = 'OK';
         edit.classList = 'editTaskBtn';
+
+        document.addEventListener('keydown', submitEditOnEnter);
+        document.removeEventListener('keydown', submitTaskOnEnter);
+
+        edit.addEventListener('click', function() {
+            edit.click();
+        })
 
         if (!newTaskModal.querySelector('form').querySelector('.editTaskBtn'))
             newTaskModal.querySelector('form').append(edit);
@@ -301,8 +318,14 @@ const DOM = (function() {
     }
     const openTaskModal = () => {
         document.querySelector('.addTask').style.display = 'block';
-        if (document.querySelector('.editTaskBtn')) 
+        document.querySelector('.addTask').disabled = false;
+        document.addEventListener('keydown', submitTaskOnEnter);
+
+        if (document.querySelector('.editTaskBtn')) {
             document.querySelector('.editTaskBtn').style.display = 'none';
+            document.querySelector('.editTaskBtn').disabled = true;
+            document.removeEventListener('keydown', submitEditOnEnter);
+        }
     }
 
     const toggleShowTasks = (department) => {
@@ -372,11 +395,20 @@ const Functionality = (function() {
         }, 0)
     }
     const editTask = (task, title, priority, description, notes, date) => {
-        task.title = title;
-        task.priority = priority;
-        task.description = description;
-        task.notes = notes;
-        task.deadline = date;
+        let DEPARTMENTS = JSON.parse(window.localStorage.getItem('DEPARTMENTS'));
+        let i, j;
+        for (i = 0; i < DEPARTMENTS.length; i++)
+            for (j = 0; j < DEPARTMENTS[i].toDos.length; j++)
+                if (DEPARTMENTS[i].toDos[j].title === task.title) {
+                    DEPARTMENTS[i].toDos[j].title = title;
+                    DEPARTMENTS[i].toDos[j].priority = priority;
+                    DEPARTMENTS[i].toDos[j].description = description;
+                    DEPARTMENTS[i].toDos[j].notes = notes;
+                    DEPARTMENTS[i].toDos[j].deadline = date;
+                }
+        setTimeout(function() {
+            window.localStorage.setItem('DEPARTMENTS', JSON.stringify(DEPARTMENTS));
+        }, 0)
     }
     
     const deleteDepartment = (departmentDOM) => {
@@ -407,7 +439,7 @@ const Functionality = (function() {
 
 function processInfoEditTask(task, title, priority, description, notes, date) {
     Functionality.editTask(task, title, priority, description, notes, date);
-    DOM.updateDepartments();
+    setTimeout(function() {DOM.updateDepartments()}, 0);
     setTimeout(DOM.closeModal(newTaskModal));
 }
 
