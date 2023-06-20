@@ -194,7 +194,6 @@ const DOM = (function() {
     }
 
     const updateDepartment = (department) => {
-        console.log(department);
         let toDoCont = loadTasks(department);
         if (toDoCont) {
             const depCont = document.createElement('div');
@@ -365,10 +364,8 @@ const Functionality = (function() {
         const DEPARTMENTS = (JSON.parse(window.localStorage.getItem('DEPARTMENTS')));
         let i;
         for (i = 0; i < DEPARTMENTS.length; i++) {
-            if (DEPARTMENTS[i].title === department.title) {
-                    console.log('here');
+            if (DEPARTMENTS[i].title === department.title) 
                     DEPARTMENTS[i].toDos.push(task);
-                }
         }
         setTimeout(function() {
             window.localStorage.setItem('DEPARTMENTS', JSON.stringify(DEPARTMENTS));
@@ -394,9 +391,17 @@ const Functionality = (function() {
     }
     
     const markTaskAsDone = (task) => {
-        task.done = true;
+        const DEPARTMENTS = JSON.parse(window.localStorage.getItem('DEPARTMENTS'));
+        let i, j;
+        for (i = 0; i < DEPARTMENTS.length; i++)
+            for (j = 0; j < DEPARTMENTS[i].toDos.length; j++) {
+                if (DEPARTMENTS[i].toDos[j].title === task.title)
+                    DEPARTMENTS[i].toDos[j].done = true;
+            }
+        setTimeout(function() {
+            window.localStorage.setItem('DEPARTMENTS', JSON.stringify(DEPARTMENTS));
+        })
     }
-
     return {addDepartment, addTask, deleteDepartment, editTask, extractTaskData, markTaskAsDone};
 })();
 
