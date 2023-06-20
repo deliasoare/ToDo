@@ -300,10 +300,6 @@ const DOM = (function() {
         document.addEventListener('keydown', submitEditOnEnter);
         document.removeEventListener('keydown', submitTaskOnEnter);
 
-        edit.addEventListener('click', function() {
-            edit.click();
-        })
-
         if (!newTaskModal.querySelector('form').querySelector('.editTaskBtn'))
             newTaskModal.querySelector('form').append(edit);
 
