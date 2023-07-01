@@ -27,7 +27,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'ToDoing',
             filename: 'index.html',
-            template: './src/template.html'
+            template: './src/template.html',
+            favicon: './src/assets/favicon.png'
         }),
         new MiniCssExtractPlugin({
             filename: "styles.css"

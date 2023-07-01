@@ -10,19 +10,26 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles.css (2) ***!
   \**********************************************************************/
 :root {
-    --header: rgba(153, 243, 255, 1);
+    --header: #99f3ff;
     --bg : rgba(235, 253, 255, 1);
     --taskBg: rgba(245, 245, 245, 1);
     --prior1: rgba(255, 235, 235, 1);
     --prior2: rgba(255, 253, 235, 1);
     --prior3: rgba(235, 255, 237, 1);
     --modalBg: rgba(0, 0, 0, 0.4);
+    --boxShadow: rgba(0, 0, 0, 0.2);
+    --buttonPrior1: rgba(255, 153, 153, 1);
+    --buttonPrior2:  rgba(255, 245, 153, 1);
+    --buttonPrior3: rgba(153, 255, 163, 1);
 }
 
 /* Positioning  */
 
-html::-webkit-scrollbar {
+html::-webkit-scrollbar, .existingTaskDescription::-webkit-scrollbar, .existingTaskNotes::-webkit-scrollbar {
     display:none;
+}
+.tasks::-webkit-scrollbar {
+    display: none;
 }
 
 body {
@@ -72,9 +79,35 @@ body, * {
     max-width:650px;
 }
 .tasks {
+    margin-top: 5%;
     display: flex;
-    justify-content: space-evenly;
-    align-items:center;
+    flex-direction: column;
+    gap: 5%;
+    position: relative;
+    font-size: 1.35rem;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.depTitle {
+    font-family: 'IM Fell English', serif;
+}
+.depPlus {
+    position: absolute;
+    left: 4%;
+}
+.depDelete {
+    position: absolute;
+    right: 4%;
+}
+.department {
+    display:flex;
+    width: 80%;
+    height: fit-content;
+    margin-left: 10%;
+    cursor: pointer;
+}
+.depTitle + .icon {
+    margin-left: 2%;
 }
 .categories {
     display: flex;
@@ -88,14 +121,15 @@ body, * {
     padding: 1em;
 }
 button, .category {
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.2)
+    box-shadow: 3px 3px var(--boxShadow)
 }
 .selectedCategory {
     background: var(--header);
+    box-shadow: inset 0px 0px 5px var(--boxShadow);
 }
 .tasksCont {
     background: var(--taskBg);
-    box-shadow:3px 5px rgba(0, 0, 0, 0.2);
+    box-shadow:3px 5px var(--boxShadow);
     height:80%;
     min-height:650px;
     border-radius: 10px;
@@ -181,30 +215,38 @@ ul {
 }
 .priorityLi {
     position: absolute;
-    right: 0;
+    right: 1%;
     top: 40%;
+    text-align:center;
 }
 
 .priorityLi {
     margin:0;
 }
-select {
-    border-radius:50%;
-    width:40px;
-    height:40px;
-    font-size: .7rem;
-    text-align: center;
+.priority {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background: var(--header);
+    cursor: pointer;
 }
-select, input, textarea {
+.select_ul {
+    display: none;
+}
+.priority {
+    width:60px;
+    height:25px;
+    font-size: .7rem;
+    border-bottom: 1px solid var(--header);
+}
+input, textarea {
     border: none;
 }
 input:focus, input:active, textarea:focus, textarea:active{
     outline: none;
     border:1px solid var(--header);
 }
-select {
-    outline: none;
-}
+
 option {
     border: none;
     outline: none;
@@ -214,20 +256,26 @@ input {
     padding: 0.5em;
 }
 
-.addTask{
+.addTask, .editTaskBtn {
     margin-top:2%;
     padding:1em;
     text-align:center;
-    background: var(--header);
+    background: var(--bg);
     left:35%;
     position: absolute;
-    bottom:0;
+    bottom:1%;
 }
-form, .newTask, .newDep, .colorMapMod {
+.editTaskBtn {
+    left: 42%;
+}
+form, .newTask, .newDep, .colorMapMod, .task {
     width:100%;
     height:100%;
 }
-.modalNewDep {
+.modalNewDep, .modalNewTask{
+    background: var(--bg);
+}
+input, textarea {
     background: var(--header);
 }
 .formDep {
@@ -247,9 +295,7 @@ form, .newTask, .newDep, .colorMapMod {
 .textNewDep {
     font-size: 1.3rem;
 }
-#title2 {
-    background: var(--bg);
-}
+
 .addDepartment {
     padding: 0.4em 1.5em;
     font-size:1.2rem;
@@ -285,7 +331,7 @@ form, .newTask, .newDep, .colorMapMod {
 .cp3 {
     background: var(--prior3);
 }
-input, textarea {
+input, textarea, .toDoTitle {
     font-family: 'IM Fell English', serif;
 }
 .spacedLi {
@@ -308,4 +354,128 @@ label {
         justify-items: center;
     }
 }
+.warningCont {
+    width: 100%;
+    display:flex;
+    justify-content:center;
+    height:fit-content;
+    position:absolute;
+}
+.warning {
+    width: 80%;
+    background: var(--prior1);
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    top: 20%;
+    transition: 2s ease-in-out;
+    text-align:center;
+    padding:1em;
+}
+.icon {
+    height: 25px;
+}
 
+.descLi, .notesLi, .dateLi {
+    width: fit-content;
+}
+input, textarea {
+    padding: 1em;
+}
+.toDoCont {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.toDo {
+    width: 100%;
+    padding-left: 15%;
+    padding-right: 30%;
+    display: flex;
+    justify-content:space-between;
+    cursor: pointer;
+}
+.toDoI {
+    background: var(--prior1);
+}
+.toDoII {
+    background: var(--prior2);
+}
+.toDoIII {
+    background: var(--prior3);
+}
+.existingTaskDeadline {
+    height:fit-content;
+}
+.formExistingTask > div, .formExistingTask > p {
+    font-family: 'IM Fell English', serif;
+}
+.topTask {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: relative;
+}
+.existingTaskPriority {
+    position: absolute;
+    top:5px;
+    right: 5px;
+}
+.existingTaskDeadline {
+    position:absolute;
+    bottom: 5px;
+    text-align:center;
+    width: 100%;
+    margin-left: -5%;
+}
+.editTask {
+    position: absolute;
+    bottom: 10px; 
+    right: 10px;
+    padding: 0.5em;
+    border-radius: 10px;
+}
+.editTaskPr1 {
+    background: var(--buttonPrior1);
+}
+.editTaskPr2 {
+    background: var(--buttonPrior2);
+}
+.editTaskPr3 {
+    background: var(--buttonPrior3);
+}
+.taskModalI {
+    background: var(--prior1);
+}
+.taskModalII {
+    background: var(--prior2);
+}
+.taskModalIII {
+    background: var(--prior3);
+}
+.existingTaskTitle {
+    font-size:1.5rem;
+}
+.existingTaskDescription, .existingTaskNotes, .existingTaskDeadline {
+    font-size: 1.25rem;
+}
+.existingTaskDescription, .existingTaskNotes {
+    overflow-x:scroll;
+    height:30%;
+    overflow-wrap: break-word;
+    font-family: 'IM Fell English', serif;
+    padding: 0.5em;
+}
+
+.toDoTitle {
+    width: 100%;
+}
+.doneTask {
+    text-decoration:line-through;
+    color: gray;
+    transition: ease-in-out;
+}
+
+/*# sourceMappingURL=styles.css.map*/

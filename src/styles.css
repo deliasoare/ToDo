@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap');
 
 :root {
-    --header: rgba(153, 243, 255, 1);
+    --header: #99f3ff;
     --bg : rgba(235, 253, 255, 1);
     --taskBg: rgba(245, 245, 245, 1);
     --prior1: rgba(255, 235, 235, 1);
