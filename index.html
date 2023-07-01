@@ -5,12 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<script defer src="bundle.js"></script><link href="styles.css" rel="stylesheet"></head>
+<link rel="icon" href="favicon.png"><script defer src="bundle.js"></script><link href="styles.css" rel="stylesheet"></head>
 <body>
     <div class="container">
         <div class="header">
             <div class="title">TODOING</div>
             <button class="colorMap">Color Map</button>
+            <div class="warningCont">
+                <div class="warning"></div>
+            </div>
         </div>
         <div class="main">
             <div class="upper">
@@ -36,36 +39,43 @@
         </div>
     </div>
     <div class="modal-container mod-contNewTask">
-        <div class="modal">
+        <div class="modal modalNewTask">
             <div class="newTask">
-                <form action="">
+                <form class="formTask" action="">
                     <ul>
                         <li>
-                            <label for="title">Title</label>
+                            <label for="taskTitle">Title</label>
                             <br>
-                            <input required type="text" id="title">
+                            <input maxlength="15" required type="text" id="taskTitle">
                         </li>
                         <li class="priorityLi">
-                            <select name="priority" id="priority">
-                                <option value="I">I</option>
-                                <option value="II">II</option>
-                                <option value="III">III</option>
-                            </select>
+                            <p for="priority">Priority</p>
+                            <div class="selectCont">
+                                <ul class="default_option">
+                                    <li class="priority I selectedPriority">I</li>
+                                </ul>
+                                <ul class="select_ul">
+                                    <li class="priority I">I</li>
+                                    <li class="priority II">II</li>
+                                    <li class="priority III">III</li>
+                                </ul>
+                            </div>
+                            
                         </li>
-                        <li>
+                        <li class="descLi">
                             <label for="desc">Description</label>
                             <br>
-                            <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                            <textarea name="desc" id="desc" maxlength="80" cols="25" rows="1"></textarea>
                         </li>
-                        <li>
+                        <li class="notesLi">
                             <label for="notes">Notes</label>
                             <br>
-                            <textarea name="notes" id="notes" cols="30" rows="3"></textarea>
+                            <textarea name="notes" id="notes" maxlength="80" cols="25" rows="1"></textarea>
                         </li>
                         <li class="dateLi">
                             <label for="date">Deadline</label>
                             <br>
-                            <input required type="date" id="date">
+                            <input required type="datetime-local" id="date">
                         </li>
                     </ul>
                     <button type="submit" class="addTask">ADD TASK</button>
@@ -83,7 +93,7 @@
                         </li>
                         <li class="spacedLi">
                             <label for="title2">Title</label>
-                            <input required type="text" id="title2">
+                            <input maxlength="15" required type="text" autofocus id="title2">
                         </li>
                     </ul>
                     <button type="submit" class="addDepartment">ADD</button>
@@ -108,6 +118,22 @@
                         <div class="color cp3"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-container mod-contTask">
+        <div class="modal modalTask">
+            <div class="task">
+                <form class="formExistingTask" action="">
+                    <div class="topTask">
+                        <p class="existingTaskTitle"></p>
+                        <div class="existingTaskPriority"></div>
+                        <div class="existingTaskDescription"></div>
+                        <div class="existingTaskNotes"></div>
+                    </div>
+                    <div class="existingTaskDeadline"></div>
+                    <button type="submit" class="editTask">EDIT</button>
+                </form>
             </div>
         </div>
     </div>
